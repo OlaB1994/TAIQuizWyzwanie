@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">QuizWyzwanie</string>
+    <string name="fragment_menu_user_title">Your username:</string>
+    <string name="fragment_menu_user_name_placeholder">username placeholder</string>
+    <string name="fragment_menu_new_game_btn_text">New game</string>
+    <string name="fragment_menu_result_placeholder">1 - 1</string>
+    <string name="fragment_menu_surrender_text">Surrender</string>
+    <string name="fragment_menu_play_text">Play</string>
+    <string name="fragment_category_title_text">Choose category:</string>
+    <string name="fragment_category_name_placeholder">CATEGORY</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_main_toolbar_height">60dp</dimen>
+    <dimen name="normal_margin">15dp</dimen>
+    <dimen name="activity_main_toolbar_button_size">50dp</dimen>
+    <dimen name="fragment_menu_user_icon_size">55dp</dimen>
+    <dimen name="medium_text_size">15sp</dimen>
+    <dimen name="toolbar_text_size">30sp</dimen>
+    <dimen name="large_text_size">20sp</dimen>
+    <dimen name="fragment_menu_new_game_button_height">60dp</dimen>
+    <dimen name="fragment_name_small_button_height">40dp</dimen>
+    <dimen name="fragment_name_big_button_height">65dp</dimen>
+    <dimen name="fragment_menu_button_width">120dp</dimen>
+    <dimen name="fragment_category_button_size">150dp</dimen>
+    <dimen name="fragment_question_indicator_width">80dp</dimen>
+    <dimen name="fragment_question_indicator_height">30dp</dimen>
+    <dimen name="fragment_question_answer_size">130dp</dimen>
+</resources>
