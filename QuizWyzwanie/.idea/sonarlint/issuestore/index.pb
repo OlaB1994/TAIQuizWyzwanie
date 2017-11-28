@@ -19,3 +19,7 @@ t
 Dapp/src/main/java/pl/polsl/quizwyzwanie/views/domain/model/Game.java,e/5/e530de7615e76dba71890e9d6a8e75cff2f5ce11
 w
 Gapp/src/main/java/pl/polsl/quizwyzwanie/views/ui/menu/GamesAdapter.java,1/1/11a200820966853c5b6eb58e8c722f7e6624103d
+{
+Kapp/src/main/java/pl/polsl/quizwyzwanie/views/domain/model/RoundResult.java,a/2/a2e3728bb0e4426092b9948a6cdbaec934fedd4c
+x
+Happ/src/main/java/pl/polsl/quizwyzwanie/views/ui/game/RoundsAdapter.java,5/4/54763da9f92375aa54bc68e2cd8b76db4ce7e93a
