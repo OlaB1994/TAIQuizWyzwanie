@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.views.ui.game.GameFragment;
@@ -35,9 +36,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         fragmentManager = getSupportFragmentManager();
         addFragment();
     }
