@@ -8,4 +8,5 @@
     <string name="fragment_menu_play_text">Play</string>
     <string name="fragment_category_title_text">Choose category:</string>
     <string name="fragment_category_name_placeholder">CATEGORY</string>
+    <string name="sign_in">Sign In</string>
 </resources>

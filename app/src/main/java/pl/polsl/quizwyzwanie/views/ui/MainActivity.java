@@ -1,7 +1,7 @@
 package pl.polsl.quizwyzwanie.views.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,24 +11,28 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.views.ui.game.GameFragment;
 import pl.polsl.quizwyzwanie.views.ui.menu.MenuFragment;
+import pl.polsl.quizwyzwanie.views.ui.signin.SignInActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private String username = "";
+    private String photoUrl = null;
 
     @BindView(R.id.activity_main_toolbar_ll)
     LinearLayout toolbarLl;
 
-    @OnClick(R.id.activity_main_refresh_ib)
-    public void onRefreshClick(){
-
-    }
 
     @OnClick(R.id.actiity_main_stats_ib)
     public void onStatsClick(){
@@ -40,6 +44,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        if(firebaseUser == null){
+            startActivity(new Intent(this, SignInActivity.class));
+            finish();
+            return;
+        }else{
+            username = firebaseUser.getDisplayName();
+            if(firebaseUser.getPhotoUrl() != null){
+                photoUrl = firebaseUser.getPhotoUrl().toString();
+            }
+        }
         fragmentManager = getSupportFragmentManager();
         addFragment();
     }
