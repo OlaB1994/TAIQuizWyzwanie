@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "315878705180",
+    "firebase_url": "https://quiz-tai.firebaseio.com",
+    "project_id": "quiz-tai",
+    "storage_bucket": "quiz-tai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315878705180:android:b439adb90b986982",
+        "android_client_info": {
+          "package_name": "pl.polsl.quizwyzwanie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315878705180-e7ep1tsc4chq25nil38eqcir560maadj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtBmvJCwzheS2gqVodWDYIZxVCXlCcT4w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
