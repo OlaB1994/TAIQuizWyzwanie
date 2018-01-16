@@ -62,8 +62,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addFragment() {
+        MenuFragment fragment = new MenuFragment();
+        Bundle arguments = new Bundle();
+        arguments.putString("username", username);
+        fragment.setArguments(arguments);
         fragmentManager.beginTransaction()
-                .add(R.id.activity_main_fragment_container_fl, new MenuFragment(), MenuFragment.class.getName())
+                .add(R.id.activity_main_fragment_container_fl, fragment, MenuFragment.class.getName())
                 .commit();
     }
 

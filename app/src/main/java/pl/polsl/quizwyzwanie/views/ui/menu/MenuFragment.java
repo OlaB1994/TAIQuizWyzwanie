@@ -28,6 +28,8 @@ public class MenuFragment extends Fragment {
     @BindView(R.id.fragment_menu_games_rv)
     RecyclerView gamesRv;
 
+    String username = "";
+
     @OnClick(R.id.fragment_menu_new_game_btn)
     public void onNewGameClick() {
         ((MainActivity) getActivity()).switchToFragment(new GameFragment(),
@@ -45,6 +47,11 @@ public class MenuFragment extends Fragment {
 
     private void setupView() {
         //Todo: set usernameTv
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            username = bundle.getString("username");
+            usernameTv.setText(username);
+        }
         gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
                 OrientationHelper.VERTICAL, false));
         gamesRv.setAdapter(new GamesAdapter((MainActivity) getActivity(), mockGames()));
