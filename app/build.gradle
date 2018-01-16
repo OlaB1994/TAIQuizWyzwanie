@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'tai'
+            keyPassword '123456'
+            storeFile file('tai.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "pl.polsl.quizwyzwanie"
@@ -20,6 +28,7 @@ android {
                 optimizeCode false
                 proguardFile 'proguard-rules.pro'
             }
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
