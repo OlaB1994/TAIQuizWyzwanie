@@ -2,11 +2,17 @@ package pl.polsl.quizwyzwanie.views.domain.model;
 
 public class RoundResult {
 
-    private String categoryName;
-    private boolean[] myQuestionsResults = new boolean[3];
-    private boolean[] opponentQuestionsResults = new boolean[3];
+    public static final int ROUND_PER_GAME = 6;
+    public static final int ANSWER_UNDEFINED = 0;
+    public static final int ANSWER_CORRECT = 1;
+    public static final int ANSWER_WRONG = 2;
 
-    public RoundResult(String categoryName, boolean[] myQuestionsResults, boolean[] opponentQuestionsResults) {
+
+    private String categoryName;
+    private int[] myQuestionsResults = {ANSWER_UNDEFINED,ANSWER_UNDEFINED,ANSWER_UNDEFINED};
+    private int[] opponentQuestionsResults = {ANSWER_UNDEFINED,ANSWER_UNDEFINED,ANSWER_UNDEFINED};
+
+    public RoundResult(String categoryName, int[] myQuestionsResults, int[] opponentQuestionsResults) {
         this.categoryName = categoryName;
         this.myQuestionsResults = myQuestionsResults;
         this.opponentQuestionsResults = opponentQuestionsResults;
@@ -14,19 +20,17 @@ public class RoundResult {
 
     public RoundResult() {
         categoryName = "TEST";
-        myQuestionsResults = new boolean[]{false, true, false};
-        opponentQuestionsResults = new boolean[]{true, true, false};
     }
 
     public String getCategoryName() {
         return categoryName;
     }
 
-    public boolean[] getMyQuestionsResults() {
+    public int[] getMyQuestionsResults() {
         return myQuestionsResults;
     }
 
-    public boolean[] getOpponentQuestionsResults() {
+    public int[] getOpponentQuestionsResults() {
         return opponentQuestionsResults;
     }
 }

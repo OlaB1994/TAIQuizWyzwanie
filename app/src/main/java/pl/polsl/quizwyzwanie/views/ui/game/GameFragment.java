@@ -20,6 +20,10 @@ import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.views.domain.model.RoundResult;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 
+import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_CORRECT;
+import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_WRONG;
+import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ROUND_PER_GAME;
+
 public class GameFragment extends Fragment {
 
     @BindView(R.id.fragment_game_my_username_tv)
@@ -60,8 +64,13 @@ public class GameFragment extends Fragment {
 
     private List<RoundResult> mockRounds() {
         List<RoundResult> results = new ArrayList<>();
-        for (int i = 0; i < 7; i++)
-            results.add(new RoundResult());
+        results.add(new RoundResult("CAT1", new int[]{ANSWER_CORRECT, ANSWER_WRONG, ANSWER_CORRECT},
+                new int[]{ANSWER_WRONG, ANSWER_CORRECT, ANSWER_WRONG}));
+        results.add(new RoundResult());
+        results.add(new RoundResult());
+        results.add(new RoundResult());
+        results.add(new RoundResult());
+        results.add(new RoundResult());
         return results;
     }
 

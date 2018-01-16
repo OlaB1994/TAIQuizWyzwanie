@@ -1,11 +1,8 @@
 package pl.polsl.quizwyzwanie.views.domain.model;
 
 import android.support.annotation.NonNull;
-import android.widget.TextView;
 
-import java.util.Objects;
-
-public class Game implements Comparable<Game>{
+public class Game implements Comparable<Game> {
 
     public static final int STATE_FINISHED = 0;
     public static final int STATE_WAITING = 1;
@@ -25,8 +22,8 @@ public class Game implements Comparable<Game>{
 
     @Override
     public int compareTo(@NonNull Game o) {
-        if(state<o.getState()) return 1;
-        if(state>o.getState()) return -1;
+        if (state < o.getState()) return 1;
+        if (state > o.getState()) return -1;
         return 0;
     }
 
