@@ -16,8 +16,10 @@ import pl.polsl.quizwyzwanie.views.domain.model.RoundResult;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 
 import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_CORRECT;
+import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_DO_NOT_SHOW;
 import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_UNDEFINED;
 import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_WRONG;
+import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.DEFAULT_ANSWER;
 
 public class RoundsAdapter extends RecyclerView.Adapter<RoundsAdapter.ViewHolder> {
 
@@ -41,21 +43,37 @@ public class RoundsAdapter extends RecyclerView.Adapter<RoundsAdapter.ViewHolder
     }
 
     private void setupAnswers(ViewHolder holder, int[] myQuestionsResults, int[] opponentQuestionsResults) {
-        setupIcon(holder.myFirstQuestionIv, myQuestionsResults[0]);
-        setupIcon(holder.mySecondQuestionIv, myQuestionsResults[1]);
-        setupIcon(holder.myThirdQuestionIv, myQuestionsResults[2]);
-        setupIcon(holder.opponentFirstQuestionIv, opponentQuestionsResults[0]);
-        setupIcon(holder.opponentSecondQuestionIv, opponentQuestionsResults[1]);
-        setupIcon(holder.opponentThirdQuestionIv, opponentQuestionsResults[2]);
+        if (myQuestionsResults == DEFAULT_ANSWER && opponentQuestionsResults != DEFAULT_ANSWER)
+            doNotShowIcons(holder);
+        else {
+            setupIcon(holder.myFirstQuestionIv, myQuestionsResults[0]);
+            setupIcon(holder.mySecondQuestionIv, myQuestionsResults[1]);
+            setupIcon(holder.myThirdQuestionIv, myQuestionsResults[2]);
+            setupIcon(holder.opponentFirstQuestionIv, opponentQuestionsResults[0]);
+            setupIcon(holder.opponentSecondQuestionIv, opponentQuestionsResults[1]);
+            setupIcon(holder.opponentThirdQuestionIv, opponentQuestionsResults[2]);
+        }
     }
 
+    private void doNotShowIcons(ViewHolder holder) {
+        setupIcon(holder.myFirstQuestionIv, ANSWER_UNDEFINED);
+        setupIcon(holder.mySecondQuestionIv, ANSWER_UNDEFINED);
+        setupIcon(holder.myThirdQuestionIv, ANSWER_UNDEFINED);
+        setupIcon(holder.opponentFirstQuestionIv, ANSWER_DO_NOT_SHOW);
+        setupIcon(holder.opponentSecondQuestionIv, ANSWER_DO_NOT_SHOW);
+        setupIcon(holder.opponentThirdQuestionIv, ANSWER_DO_NOT_SHOW);
+    }
+
+
     private void setupIcon(ImageView imageView, int answer) {
-        if(answer == ANSWER_CORRECT)
+        if (answer == ANSWER_CORRECT)
             imageView.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.entry_games_correct));
-        else if(answer == ANSWER_UNDEFINED)
+        else if (answer == ANSWER_UNDEFINED)
             imageView.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.entry_games_undefined));
-        else if(answer == ANSWER_WRONG)
+        else if (answer == ANSWER_WRONG)
             imageView.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.entry_games_wrong));
+        else if (answer == ANSWER_DO_NOT_SHOW)
+            imageView.setImageDrawable(ContextCompat.getDrawable(activity, R.drawable.entry_games_do_not_show));
     }
 
     @Override
@@ -64,7 +82,7 @@ public class RoundsAdapter extends RecyclerView.Adapter<RoundsAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        
+
         @BindView(R.id.entry_rounds_my_first_question_iv)
         ImageView myFirstQuestionIv;
         @BindView(R.id.entry_rounds_my_second_question_iv)
