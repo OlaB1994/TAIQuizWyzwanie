@@ -71,7 +71,6 @@ public class QuestionFragment extends Fragment {
     }
 
     private void setupTimer() {
-        timerPb.setProgress(100);
         CountDownTimer countDownTimer=new CountDownTimer(5000,1000) {
 
             @Override

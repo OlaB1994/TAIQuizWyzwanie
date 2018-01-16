@@ -3,46 +3,48 @@
     style="@style/Fragment">
 
 
-<LinearLayout
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_margin="@dimen/normal_margin"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_height="wrap_content">
+        android:layout_margin="@dimen/normal_margin"
+        android:gravity="center">
 
         <ImageView
-            android:layout_width="@dimen/fragment_question_indicator_width"
-            android:layout_margin="@dimen/normal_margin"
             android:id="@+id/fragment_question_first_indicator_iv"
-            android:layout_height="@dimen/fragment_question_indicator_height" />
-        <ImageView
             android:layout_width="@dimen/fragment_question_indicator_width"
-            android:layout_margin="@dimen/normal_margin"
+            android:layout_height="@dimen/fragment_question_indicator_height"
+            android:layout_margin="@dimen/normal_margin" />
+
+        <ImageView
             android:id="@+id/fragment_question_second_indicator_iv"
-            android:layout_height="@dimen/fragment_question_indicator_height" />
-        <ImageView
             android:layout_width="@dimen/fragment_question_indicator_width"
-            android:layout_margin="@dimen/normal_margin"
+            android:layout_height="@dimen/fragment_question_indicator_height"
+            android:layout_margin="@dimen/normal_margin" />
+
+        <ImageView
             android:id="@+id/fragment_question_third_indicator_iv"
-            android:layout_height="@dimen/fragment_question_indicator_height" />
+            android:layout_width="@dimen/fragment_question_indicator_width"
+            android:layout_height="@dimen/fragment_question_indicator_height"
+            android:layout_margin="@dimen/normal_margin" />
     </LinearLayout>
 
     <pl.polsl.quizwyzwanie.views.QuizTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/toolbar_text_size"
-        android:layout_gravity="center"
         android:id="@+id/fragment_question_category_name_tv"
-        android:text="@string/fragment_category_name_placeholder"/>
-
-    <pl.polsl.quizwyzwanie.views.QuizTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/medium_text_size"
+        android:layout_gravity="center"
+        android:text="@string/fragment_category_name_placeholder"
+        android:textSize="@dimen/toolbar_text_size" />
+
+    <pl.polsl.quizwyzwanie.views.QuizTextView
+        android:id="@+id/fragment_question_question_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/normal_margin"
-        android:id="@+id/fragment_question_question_tv"
-        android:text="@string/fragment_category_name_placeholder"/>
+        android:text="@string/fragment_category_name_placeholder"
+        android:textSize="@dimen/medium_text_size" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,17 +53,18 @@
         android:orientation="horizontal">
 
         <Button
-        android:layout_width="@dimen/fragment_question_answer_size"
-        android:layout_margin="@dimen/normal_margin"
-        android:id="@+id/fragment_question_answer_a_btn"
-        android:layout_height="@dimen/fragment_question_answer_size" />
+            android:id="@+id/fragment_question_answer_a_btn"
+            android:layout_width="@dimen/fragment_question_answer_size"
+            android:layout_height="@dimen/fragment_question_answer_size"
+            android:layout_margin="@dimen/normal_margin" />
 
         <Button
-            android:layout_width="@dimen/fragment_question_answer_size"
-            android:layout_margin="@dimen/normal_margin"
             android:id="@+id/fragment_question_answer_b_btn"
-            android:layout_height="@dimen/fragment_question_answer_size" />
+            android:layout_width="@dimen/fragment_question_answer_size"
+            android:layout_height="@dimen/fragment_question_answer_size"
+            android:layout_margin="@dimen/normal_margin" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,27 +72,26 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="@dimen/fragment_question_answer_size"
-            android:layout_margin="@dimen/normal_margin"
             android:id="@+id/fragment_question_answer_c_btn"
-            android:layout_height="@dimen/fragment_question_answer_size" />
+            android:layout_width="@dimen/fragment_question_answer_size"
+            android:layout_height="@dimen/fragment_question_answer_size"
+            android:layout_margin="@dimen/normal_margin" />
 
         <Button
-            android:layout_width="@dimen/fragment_question_answer_size"
-            android:layout_margin="@dimen/normal_margin"
             android:id="@+id/fragment_question_answer_d_btn"
-            android:layout_height="@dimen/fragment_question_answer_size" />
+            android:layout_width="@dimen/fragment_question_answer_size"
+            android:layout_height="@dimen/fragment_question_answer_size"
+            android:layout_margin="@dimen/normal_margin" />
     </LinearLayout>
 
     <ProgressBar
         android:id="@+id/fragment_question_timer_pb"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:max="100"
-        android:progress="0"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_margin="@dimen/normal_margin"
-        />
+        android:max="100"
+        android:progress="100" />
 
 
 </LinearLayout>
