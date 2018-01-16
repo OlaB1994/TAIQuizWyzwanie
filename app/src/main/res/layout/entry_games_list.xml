@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:id="@+id/entry_games_main_ll"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/entry_games_item_height">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/entry_games_list_icon_iv"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:text="TEXT PLACEHOLDER"
+        android:gravity="center|left"
+        android:layout_marginLeft="@dimen/normal_margin"
+        android:layout_marginStart="@dimen/normal_margin"
+        android:id="@+id/entry_games_text_tv"/>
 
 </LinearLayout>

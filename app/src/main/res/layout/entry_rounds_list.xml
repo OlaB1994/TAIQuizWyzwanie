@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:id="@+id/entry_rounds_main_ll"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/entry_rounds_my_first_question_iv"
+        style="@style/EntryGamesQuestion" />
+    <ImageView
+        android:id="@+id/entry_rounds_my_second_question_iv"
+        style="@style/EntryGamesQuestion" />
+    <ImageView
+        android:id="@+id/entry_rounds_my_third_question_iv"
+        style="@style/EntryGamesQuestion" />
+    <TextView android:layout_height="@dimen/entry_game_question_item_text_height"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:lines="2"
+        android:text="PLACEHOLDER PLACEHOLDER"/>
+    <ImageView
+        android:id="@+id/entry_rounds_opponent_first_question_iv"
+        style="@style/EntryGamesQuestion" />
+    <ImageView
+        android:id="@+id/entry_rounds_opponent_second_question_iv"
+        style="@style/EntryGamesQuestion" />
+    <ImageView
+        android:id="@+id/entry_rounds_opponent_third_question_iv"
+        style="@style/EntryGamesQuestion" />
 
 </LinearLayout>

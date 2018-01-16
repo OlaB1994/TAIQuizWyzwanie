@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="toolbar_bg">#3F51B5</color>
+
+    <color name="entry_games_wrong">#FF0000</color>
+    <color name="entry_games_correct">#00FF00</color>
 </resources>

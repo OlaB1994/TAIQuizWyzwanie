@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,16 +45,20 @@ public class MenuFragment extends Fragment {
     }
 
     private void setupView() {
-        //Todo: set usernameTv
+        List<Game> games = mockGames();
+        Collections.sort(games);
         gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
                 OrientationHelper.VERTICAL, false));
-        gamesRv.setAdapter(new GamesAdapter((MainActivity) getActivity(), mockGames()));
+        gamesRv.setAdapter(new GamesAdapter((MainActivity) getActivity(), games));
     }
 
     private List<Game> mockGames() {
         List<Game> games = new ArrayList<>();
-        for (int i = 0; i < 5; i++)
-            games.add(new Game());
+        games.add(new Game("mockName", 0, 2, Game.STATE_WAITING));
+        games.add(new Game("mockName", 0, 2, Game.STATE_FINISHED));
+        games.add(new Game("mockName", 0, 2, Game.STATE_FINISHED));
+        games.add(new Game("mockName", 0, 2, Game.STATE_YOUR_TURN));
+        games.add(new Game("mockName", 0, 2, Game.STATE_YOUR_TURN));
         return games;
     }
 
