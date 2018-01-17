@@ -5,11 +5,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.views.domain.model.Game;
 import pl.polsl.quizwyzwanie.views.domain.model.RoundResult;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 
@@ -25,6 +28,13 @@ import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_UNDEFI
 import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_WRONG;
 import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.DEFAULT_ANSWER;
 import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ROUND_PER_GAME;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 public class GameFragment extends Fragment {
 
@@ -77,5 +87,6 @@ public class GameFragment extends Fragment {
         results.add(new RoundResult());
         return results;
     }
+
 
 }
