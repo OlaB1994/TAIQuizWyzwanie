@@ -26,6 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import butterknife.ButterKnife;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.views.ui.dialogs.LoadingDialog;
 import pl.polsl.quizwyzwanie.views.ui.menu.MenuFragment;
 
 public class MainActivity extends AppCompatActivity implements
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements
     private String username = "";
     private String photoUrl = null;
     private GoogleApiClient googleApiClient;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +50,14 @@ public class MainActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         initializeFirebase();
         handleLogin();
+        initializeDialog();
         fragmentManager = getSupportFragmentManager();
         addFragment();
+    }
+
+    private void initializeDialog() {
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.setupDialog();
     }
 
     private void handleLogin() {
@@ -149,5 +157,15 @@ public class MainActivity extends AppCompatActivity implements
         Toast.makeText(MainActivity.this, "Authentication failed.",
                 Toast.LENGTH_SHORT).show();
         finish();
+    }
+
+    public void showDialog(){
+        if(!loadingDialog.isShowing() && !isFinishing())
+            loadingDialog.show();
+    }
+
+    public void dismissDialog(){
+        if(loadingDialog.isShowing() && !isFinishing())
+            loadingDialog.dismiss();
     }
 }

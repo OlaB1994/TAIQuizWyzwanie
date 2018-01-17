@@ -22,4 +22,11 @@
     <dimen name="entry_games_item_height">60dp</dimen>
     <dimen name="separator_height">1dp</dimen>
     <dimen name="fragment_menu_score_height">80dp</dimen>
+    <dimen name="dialog_width">250dp</dimen>
+    <dimen name="dialog_loading_progress_size">60dp</dimen>
+    <dimen name="dialog_loading_progress_margin_end">15dp</dimen>
+    <dimen name="dialog_loading_label_size">20sp</dimen>
+    <dimen name="dialog_loading_padding">10dp</dimen>
+    <dimen name="entry_navigation_list_indicator_corner">10dp</dimen>
+    <dimen name="dialog_height">100dp</dimen>
 </resources>
