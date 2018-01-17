@@ -29,7 +29,7 @@
             android:layout_margin="@dimen/normal_margin" />
     </LinearLayout>
 
-    <pl.polsl.quizwyzwanie.views.QuizTextView
+    <TextView
         android:id="@+id/fragment_question_category_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         android:text="@string/fragment_category_name_placeholder"
         android:textSize="@dimen/toolbar_text_size" />
 
-    <pl.polsl.quizwyzwanie.views.QuizTextView
+    <TextView
         android:id="@+id/fragment_question_question_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

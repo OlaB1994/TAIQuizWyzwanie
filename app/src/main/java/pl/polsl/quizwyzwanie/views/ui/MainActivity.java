@@ -36,18 +36,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        if(firebaseUser == null){
-            startActivity(new Intent(this, SignInActivity.class));
-            finish();
-            return;
-        }else{
-            username = firebaseUser.getDisplayName();
-            if(firebaseUser.getPhotoUrl() != null){
-                photoUrl = firebaseUser.getPhotoUrl().toString();
-            }
-        }
+//        firebaseAuth = FirebaseAuth.getInstance();
+//        firebaseUser = firebaseAuth.getCurrentUser();
+//        if(firebaseUser == null){
+//            startActivity(new Intent(this, SignInActivity.class));
+//            finish();
+//            return;
+//        }else{
+//            username = firebaseUser.getDisplayName();
+//            if(firebaseUser.getPhotoUrl() != null){
+//                photoUrl = firebaseUser.getPhotoUrl().toString();
+//            }
+//        }
         fragmentManager = getSupportFragmentManager();
         addFragment();
     }

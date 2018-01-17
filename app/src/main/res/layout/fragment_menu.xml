@@ -19,14 +19,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <pl.polsl.quizwyzwanie.views.QuizTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/medium_text_size"
                 android:layout_marginLeft="@dimen/normal_margin"
                 android:text="@string/fragment_menu_user_title"/>
 
-            <pl.polsl.quizwyzwanie.views.QuizTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/large_text_size"
@@ -41,11 +41,11 @@
         android:text="@string/fragment_menu_new_game_btn_text"
         android:id="@+id/fragment_menu_new_game_btn"
         android:layout_margin="@dimen/normal_margin"
+        android:background="@drawable/button_bg"
         android:layout_height="@dimen/fragment_menu_new_game_button_height" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_margin="@dimen/normal_margin"
         android:id="@+id/fragment_menu_games_rv"
         android:layout_height="match_parent"/>
 
