@@ -7,7 +7,6 @@
     <LinearLayout
         android:orientation="horizontal" android:layout_width="match_parent"
         android:id="@+id/entry_games_main_ll"
-        android:background="@drawable/list_bg"
         android:layout_marginStart="@dimen/normal_margin"
         android:layout_marginLeft="@dimen/normal_margin"
         android:layout_height="@dimen/entry_games_item_height">
@@ -24,6 +23,8 @@
             android:layout_weight="5"
             android:text="TEXT PLACEHOLDER"
             android:gravity="center|left"
+            android:textSize="@dimen/large_text_size"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_marginLeft="@dimen/normal_margin"
             android:layout_marginStart="@dimen/normal_margin"
             android:id="@+id/entry_games_text_tv"/>
