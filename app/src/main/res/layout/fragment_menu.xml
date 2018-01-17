@@ -3,16 +3,17 @@
     style="@style/Fragment">
 
 
-<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/normal_margin"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/fragment_menu_score_height"
+        android:background="@drawable/score_bg"
+        android:orientation="horizontal"
+        android:padding="@dimen/normal_margin">
 
         <ImageView
             android:layout_width="@dimen/fragment_menu_user_icon_size"
             android:layout_height="@dimen/fragment_menu_user_icon_size"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/ic_user" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -22,31 +23,33 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/medium_text_size"
                 android:layout_marginLeft="@dimen/normal_margin"
-                android:text="@string/fragment_menu_user_title"/>
+                android:text="@string/fragment_menu_user_title"
+                android:textSize="@dimen/medium_text_size" />
 
             <TextView
+                android:id="@+id/fragment_menu_username_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/large_text_size"
-                android:id="@+id/fragment_menu_username_tv"
                 android:layout_marginLeft="@dimen/normal_margin"
-                android:text="@string/fragment_menu_user_name_placeholder"/>
+                android:text="@string/fragment_menu_user_name_placeholder"
+                android:textSize="@dimen/large_text_size" />
         </LinearLayout>
     </LinearLayout>
 
     <Button
-        android:layout_width="match_parent"
-        android:text="@string/fragment_menu_new_game_btn_text"
         android:id="@+id/fragment_menu_new_game_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fragment_menu_new_game_button_height"
         android:layout_margin="@dimen/normal_margin"
         android:background="@drawable/button_bg"
-        android:layout_height="@dimen/fragment_menu_new_game_button_height" />
+        android:text="@string/fragment_menu_new_game_btn_text" />
+
+    <ImageView style="@style/Separator" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/fragment_menu_games_rv"
-        android:layout_height="match_parent"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

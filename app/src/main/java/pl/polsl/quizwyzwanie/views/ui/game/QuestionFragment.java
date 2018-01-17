@@ -26,8 +26,6 @@ public class QuestionFragment extends Fragment {
     ImageView secondIndicatorIv;
     @BindView(R.id.fragment_question_third_indicator_iv)
     ImageView thirdIndicatorIv;
-    @BindView(R.id.fragment_question_category_name_tv)
-    TextView categoryNameTv;
     @BindView(R.id.fragment_question_question_tv)
     TextView questionTv;
     @BindView(R.id.fragment_question_answer_a_btn)

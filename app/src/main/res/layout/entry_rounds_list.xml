@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/entry_rounds_main_ll"
     android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/entry_rounds_margin"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
