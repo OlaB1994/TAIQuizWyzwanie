@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/activity_main_toolbar_ll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_main_toolbar_height"
         android:background="@color/colorPrimaryDark"

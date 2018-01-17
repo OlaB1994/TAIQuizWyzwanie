@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Dialog"
+    android:layout_gravity="center">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dialog_loading_content_ll"
+        android:layout_alignEnd="@+id/dialog_loading_content_ll"
+        android:layout_alignRight="@+id/dialog_loading_content_ll"
+        android:scaleType="fitXY"
+        android:src="@drawable/dialog_background"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:id="@+id/dialog_loading_content_ll"
+        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dialog_width"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dialog_loading_padding">
+
+        <ProgressBar
+            android:id="@+id/dialog_loading_loading_pb"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="@dimen/dialog_loading_progress_size"
+            android:layout_height="@dimen/dialog_loading_progress_size"
+            android:layout_marginEnd="@dimen/dialog_loading_progress_margin_end"
+            android:layout_marginRight="@dimen/dialog_loading_progress_margin_end"
+            android:background="@android:color/transparent" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:text="@string/loading"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/dialog_loading_label_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+</RelativeLayout>

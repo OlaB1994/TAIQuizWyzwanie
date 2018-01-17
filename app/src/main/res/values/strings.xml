@@ -11,5 +11,5 @@
     <string name="entry_games_state_waiting">Waiting for %1$s move!</string>
     <string name="entry_games_state_finished">Your game with %1$s is finished!</string>
     <string name="entry_games_state_your_turn">Your turn!</string>
-    <string name="sign_in">Sign In</string>
+    <string name="loading">Loading...</string>
 </resources>
