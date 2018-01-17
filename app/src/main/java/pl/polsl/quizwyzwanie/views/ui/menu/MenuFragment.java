@@ -38,6 +38,8 @@ public class MenuFragment extends Fragment {
     RecyclerView gamesRv;
 
     String username = "";
+    private List<Game> gamesList = new ArrayList<>();
+    private GamesAdapter adapter;
 
     @OnClick(R.id.fragment_menu_new_game_btn)
     public void onNewGameClick() {
@@ -65,9 +67,6 @@ public class MenuFragment extends Fragment {
 //        Collections.sort(games);
 //        gamesRv.setAdapter(new GamesAdapter((MainActivity) getActivity(), games));
         new GetData().execute();
-
-        gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
-                OrientationHelper.VERTICAL, false));
     }
 
 
@@ -75,19 +74,19 @@ public class MenuFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            //todo dialog dla startu pobierania danych z bazy
             ((MainActivity)getActivity()).showDialog();
-
+            gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
+                    OrientationHelper.VERTICAL, false));
+            adapter = new GamesAdapter((MainActivity) getActivity(), gamesList);
+            gamesRv.setAdapter(adapter);
         }
 
         @Override
         protected List<Game> doInBackground(Void... voids) {
-            List<Game> gamesList = new ArrayList<>();
-
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             DatabaseReference gamesRef = rootRef.child("games");
-
             gamesRef.addValueEventListener(new ValueEventListener() {
+
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
@@ -96,6 +95,8 @@ public class MenuFragment extends Fragment {
 
                         Log.d("TMP", game.getOpponentUsername());
                     }
+                    Collections.sort(gamesList);
+                    adapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -109,11 +110,7 @@ public class MenuFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Game> gamesList) {
-            //todo dialog na zakonczenie pobierania danych
-
             ((MainActivity)getActivity()).dismissDialog();
-            Collections.sort(gamesList);
-            gamesRv.setAdapter(new GamesAdapter((MainActivity) getActivity(), gamesList));
         }
     }
 }
