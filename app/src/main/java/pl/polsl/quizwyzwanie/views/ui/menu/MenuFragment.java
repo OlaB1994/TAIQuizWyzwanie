@@ -27,6 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.views.domain.model.Game;
+import pl.polsl.quizwyzwanie.views.domain.model.User;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 import pl.polsl.quizwyzwanie.views.ui.game.GameFragment;
 
@@ -41,10 +42,25 @@ public class MenuFragment extends Fragment {
     String userId = "";
     private List<Game> gamesList = new ArrayList<>();
     private GamesAdapter adapter;
+    private Bundle bundle;
 
     @OnClick(R.id.fragment_menu_new_game_btn)
     public void onNewGameClick() {
-        ((MainActivity) getActivity()).switchToFragment(new GameFragment(),
+        //todo tutaj trzeba stworzyć nową grę i pusha zrobić do bazy, potem te dane wcisnąć do bundla
+        Game game = new Game(null, null, null, null, false,
+                new User(false, "email", false, username, null, true,0),
+                new User(false, "email", false, "oponentName", null, true, 0),
+                username, "none");
+        //todo ten game wyżej uzupełnić poprawnymi danymi.
+
+        GameFragment gameFragment = new GameFragment();
+        Bundle arguments = new Bundle();
+        arguments.putString("username", username);
+        arguments.putString("userId", userId);
+        arguments.putSerializable("game", game);
+
+        gameFragment.setArguments(arguments);
+        ((MainActivity) getActivity()).switchToFragment(gameFragment,
                 GameFragment.class.getName(), MenuFragment.class.getName());
     }
 
@@ -59,7 +75,7 @@ public class MenuFragment extends Fragment {
     }
 
     private void setupFields() {
-        Bundle bundle = this.getArguments();
+        bundle = this.getArguments();
         if (bundle != null) {
             username = bundle.getString("username");
             userId = bundle.getString("userId");
@@ -68,10 +84,6 @@ public class MenuFragment extends Fragment {
 
     private void setupView() {
         usernameTv.setText(username);
-
-//        List<Game> games = getGamesFromFirebase();
-//        Collections.sort(games);
-//        gamesRv.setAdapter(new GamesAdapter((MainActivity) getActivity(), games));
         new GetData().execute();
     }
 
@@ -83,7 +95,7 @@ public class MenuFragment extends Fragment {
             ((MainActivity)getActivity()).showDialog();
             gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
                     OrientationHelper.VERTICAL, false));
-            adapter = new GamesAdapter((MainActivity) getActivity(), gamesList);
+            adapter = new GamesAdapter((MainActivity) getActivity(), gamesList, bundle);
             gamesRv.setAdapter(adapter);
         }
 

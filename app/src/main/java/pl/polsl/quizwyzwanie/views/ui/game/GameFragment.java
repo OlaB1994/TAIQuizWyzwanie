@@ -47,6 +47,10 @@ public class GameFragment extends Fragment {
     @BindView(R.id.fragment_game_round_results_rv)
     RecyclerView resultsRv;
 
+    String username = "";
+    String userId = "";
+    Game game;
+
     @OnClick(R.id.fragment_game_surrender_btn)
     public void onSurrenderClick(){
 
@@ -63,15 +67,28 @@ public class GameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this,view);
+        setupGame();
         setupView();
         return view;
     }
 
     private void setupView() {
         //todo: setup usernames and results
+        myUsernameTv.setText(username);
+        opponentUsernameTv.setText(game.getOpponentUsername());
+
         resultsRv.setLayoutManager(new LinearLayoutManager(getContext(),
                 OrientationHelper.VERTICAL, false));
         resultsRv.setAdapter(new RoundsAdapter((MainActivity) getActivity(), mockRounds()));
+    }
+
+    private void setupGame() {
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            username = bundle.getString("username");
+            userId = bundle.getString("userId");
+            game = (Game)bundle.getSerializable("game");
+        }
     }
 
     private List<RoundResult> mockRounds() {

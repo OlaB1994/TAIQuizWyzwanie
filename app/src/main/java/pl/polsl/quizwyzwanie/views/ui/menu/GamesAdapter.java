@@ -1,5 +1,7 @@
 package pl.polsl.quizwyzwanie.views.ui.menu;
 
+import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,10 +24,12 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
 
     private List<Game> games;
     private MainActivity activity;
+    private Bundle bundleData;
 
-    public GamesAdapter(MainActivity activity, List<Game> games) {
+    public GamesAdapter(MainActivity activity, List<Game> games, Bundle bundleData) {
         this.activity = activity;
         this.games = games;
+        this.bundleData = bundleData;
     }
 
     @Override
@@ -39,12 +43,19 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
         setIcon(games.get(position), holder.iconIv);
         setText(games.get(position), holder.textTv);
         holder.mainLl.setOnClickListener(v -> {
-            if (games.get(position).getState() == Game.STATE_YOUR_TURN)
-                activity.switchToFragment(new GameFragment(),
+            GameFragment gameFragment;
+            Bundle arguments = bundleData;
+            if (games.get(position).getState() == Game.STATE_YOUR_TURN) {
+                gameFragment = new GameFragment();
+                arguments.putSerializable("game", games.get(position));
+                gameFragment.setArguments(arguments);
+                activity.switchToFragment(gameFragment,
                         GameFragment.class.getName(), MenuFragment.class.getName());
+            }
         });
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void setText(Game game, TextView textTv) {
         if (game.getState() == Game.STATE_WAITING)
             textTv.setText(activity.getString(R.string.entry_games_state_waiting, game.getOpponentUsername()));
