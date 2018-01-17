@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements
     private String photoUrl = null;
     private GoogleApiClient googleApiClient;
     private LoadingDialog loadingDialog;
+    private String userUid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements
             signIn();
         } else {
             username = firebaseUser.getDisplayName();
+            userUid = firebaseUser.getUid();
             if (firebaseUser.getPhotoUrl() != null) {
                 photoUrl = firebaseUser.getPhotoUrl().toString();
             }
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements
         MenuFragment fragment = new MenuFragment();
         Bundle arguments = new Bundle();
         arguments.putString("username", username);
+        arguments.putString("userId", userUid);
         fragment.setArguments(arguments);
         fragmentManager.beginTransaction()
                 .add(R.id.activity_main_fragment_container_fl, fragment, MenuFragment.class.getName())

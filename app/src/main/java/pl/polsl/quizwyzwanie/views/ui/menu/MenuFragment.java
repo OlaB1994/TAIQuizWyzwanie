@@ -30,6 +30,7 @@ public class MenuFragment extends Fragment {
     RecyclerView gamesRv;
 
     String username = "";
+    String userId = "";
 
     @OnClick(R.id.fragment_menu_new_game_btn)
     public void onNewGameClick() {
@@ -42,17 +43,23 @@ public class MenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, view);
+        setupFields();
         setupView();
         return view;
     }
 
+    private void setupFields() {
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            username = bundle.getString("username");
+            userId = bundle.getString("userId");
+        }
+    }
+
     private void setupView() {
         //Todo: set usernameTv
-        Bundle bundle = this.getArguments();
-        if(bundle != null){
-            username = bundle.getString("username");
-            usernameTv.setText(username);
-        }
+
+        usernameTv.setText(username);
         List<Game> games = mockGames();
         Collections.sort(games);
         gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
