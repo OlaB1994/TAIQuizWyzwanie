@@ -1,14 +1,22 @@
 package pl.polsl.quizwyzwanie.views.ui.menu;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,21 +61,59 @@ public class MenuFragment extends Fragment {
             username = bundle.getString("username");
             usernameTv.setText(username);
         }
-        List<Game> games = mockGames();
-        Collections.sort(games);
+//        List<Game> games = getGamesFromFirebase();
+//        Collections.sort(games);
+//        gamesRv.setAdapter(new GamesAdapter((MainActivity) getActivity(), games));
+        new GetData().execute();
+
         gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
                 OrientationHelper.VERTICAL, false));
-        gamesRv.setAdapter(new GamesAdapter((MainActivity) getActivity(), games));
     }
 
-    private List<Game> mockGames() {
-        List<Game> games = new ArrayList<>();
-        games.add(new Game("mockName", 0, 2, Game.STATE_WAITING));
-        games.add(new Game("mockName", 0, 2, Game.STATE_FINISHED));
-        games.add(new Game("mockName", 0, 2, Game.STATE_FINISHED));
-        games.add(new Game("mockName", 0, 2, Game.STATE_YOUR_TURN));
-        games.add(new Game("mockName", 0, 2, Game.STATE_YOUR_TURN));
-        return games;
-    }
 
+    private class GetData extends AsyncTask<Void, Void, List<Game>> {
+
+        @Override
+        protected void onPreExecute() {
+            //todo dialog dla startu pobierania danych z bazy
+            ((MainActivity)getActivity()).showDialog();
+
+        }
+
+        @Override
+        protected List<Game> doInBackground(Void... voids) {
+            List<Game> gamesList = new ArrayList<>();
+
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference gamesRef = rootRef.child("games");
+
+            gamesRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Game game = snapshot.getValue(Game.class);
+                        gamesList.add(game);
+
+                        Log.d("TMP", game.getOpponentUsername());
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d("ERROR", "ERROR");
+                }
+            });
+
+            return gamesList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Game> gamesList) {
+            //todo dialog na zakonczenie pobierania danych
+
+            ((MainActivity)getActivity()).dismissDialog();
+            Collections.sort(gamesList);
+            gamesRv.setAdapter(new GamesAdapter((MainActivity) getActivity(), gamesList));
+        }
+    }
 }
