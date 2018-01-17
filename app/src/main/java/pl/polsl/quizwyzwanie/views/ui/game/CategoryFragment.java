@@ -23,20 +23,23 @@ public class CategoryFragment extends Fragment {
     Button thirdBtn;
 
     @OnClick(R.id.fragment_category_first_btn)
-    public void onFirstCategoryClick(){
-        ((MainActivity)getActivity()).switchToFragment(new QuestionFragment(),
+    public void onFirstCategoryClick() {
+        ((MainActivity) getActivity()).switchToFragment(
+                createQuestionFragmentForCategory(firstBtn.getText().toString().toLowerCase()),
                 QuestionFragment.class.getName(), CategoryFragment.class.getName());
     }
 
     @OnClick(R.id.fragment_category_second_btn)
-    public void onSecondCategoryClick(){
-        ((MainActivity)getActivity()).switchToFragment(new QuestionFragment(),
+    public void onSecondCategoryClick() {
+        ((MainActivity) getActivity()).switchToFragment(
+                createQuestionFragmentForCategory(secondBtn.getText().toString().toLowerCase()),
                 QuestionFragment.class.getName(), CategoryFragment.class.getName());
     }
 
     @OnClick(R.id.fragment_category_third_btn)
-    public void onThirdCategoryClick(){
-        ((MainActivity)getActivity()).switchToFragment(new QuestionFragment(),
+    public void onThirdCategoryClick() {
+        ((MainActivity) getActivity()).switchToFragment(
+                createQuestionFragmentForCategory(thirdBtn.getText().toString().toLowerCase()),
                 QuestionFragment.class.getName(), CategoryFragment.class.getName());
     }
 
@@ -47,6 +50,15 @@ public class CategoryFragment extends Fragment {
         ButterKnife.bind(this, view);
         setupView();
         return view;
+    }
+
+    private QuestionFragment createQuestionFragmentForCategory(String category) {
+        Bundle arguments = new Bundle();
+        arguments.putString("category", category);
+
+        QuestionFragment questionFragment = new QuestionFragment();
+        questionFragment.setArguments(arguments);
+        return questionFragment;
     }
 
     private void setupView() {

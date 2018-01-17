@@ -19,6 +19,7 @@ import pl.polsl.quizwyzwanie.R;
 public class QuestionFragment extends Fragment {
 
     int counter=0;
+    String currentCategory;
 
     @BindView(R.id.fragment_question_first_indicator_iv)
     ImageView firstIndicatorIv;
@@ -64,6 +65,11 @@ public class QuestionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, view);
+
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            currentCategory = bundle.getString("category");
+        }
         setupTimer();
         return view;
     }
