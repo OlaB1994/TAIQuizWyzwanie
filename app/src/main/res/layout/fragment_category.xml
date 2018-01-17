@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Fragment">
 
-    <pl.polsl.quizwyzwanie.views.QuizTextView
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/fragment_menu_score_height"
         android:text="@string/fragment_category_title_text"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/normal_margin"
+        android:padding="@dimen/normal_margin"
         android:textSize="@dimen/toolbar_text_size"/>
 
     <LinearLayout
@@ -27,6 +29,7 @@
                 android:id="@+id/fragment_category_first_btn"
                 android:layout_margin="@dimen/normal_margin"
                 android:text="@string/fragment_category_name_placeholder"
+                android:background="@drawable/button_bg"
                 android:layout_height="@dimen/fragment_category_button_size" />
 
             <Button
@@ -34,6 +37,7 @@
                 android:id="@+id/fragment_category_second_btn"
                 android:layout_margin="@dimen/normal_margin"
                 android:text="@string/fragment_category_name_placeholder"
+                android:background="@drawable/button_bg"
                 android:layout_height="@dimen/fragment_category_button_size" />
         </LinearLayout>
 
@@ -41,6 +45,7 @@
             android:layout_width="@dimen/fragment_category_button_size"
             android:id="@+id/fragment_category_third_btn"
             android:layout_margin="@dimen/normal_margin"
+            android:background="@drawable/button_bg"
             android:text="@string/fragment_category_name_placeholder"
             android:layout_height="@dimen/fragment_category_button_size" />
     </LinearLayout>
