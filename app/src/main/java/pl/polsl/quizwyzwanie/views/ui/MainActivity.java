@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements
     private void signInError() {
         Toast.makeText(MainActivity.this, "Authentication failed.",
                 Toast.LENGTH_SHORT).show();
-     //   finish();
+        finish();
     }
 
     public void showDialog(){
