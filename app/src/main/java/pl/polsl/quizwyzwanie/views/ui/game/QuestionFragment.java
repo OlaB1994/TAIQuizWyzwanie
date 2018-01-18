@@ -3,6 +3,7 @@ package pl.polsl.quizwyzwanie.views.ui.game;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.views.ui.MainActivity;
+import pl.polsl.quizwyzwanie.views.ui.menu.MenuFragment;
 
 public class QuestionFragment extends Fragment {
+
+    private static final int QUESTIONS_LIMIT = 3;
+    private enum Answer {
+        A, B, C, D
+    }
+    private int questionCounter;
 
     int counter=0;
     String currentCategory;
@@ -42,22 +51,22 @@ public class QuestionFragment extends Fragment {
 
     @OnClick(R.id.fragment_question_answer_a_btn)
     public void onAnswerAClick(){
-
+        handleAnswer(Answer.A);
     }
 
     @OnClick(R.id.fragment_question_answer_b_btn)
     public void onAnswerBClick(){
-
+        handleAnswer(Answer.B);
     }
 
     @OnClick(R.id.fragment_question_answer_c_btn)
     public void onAnswerCClick(){
-
+        handleAnswer(Answer.C);
     }
 
     @OnClick(R.id.fragment_question_answer_d_btn)
     public void onAnswerDClick(){
-
+        handleAnswer(Answer.D);
     }
 
     @Override
@@ -92,6 +101,34 @@ public class QuestionFragment extends Fragment {
             }
         };
         countDownTimer.start();
+    }
+
+    private void handleAnswer(Answer answer) {
+
+        questionCounter++;
+        if(validateAnswer(answer)) {
+            //TODO: handle correct answer
+            Log.d("handleAnswer", "Answer correct!");
+        } else {
+            //TODO: handle invalid answer
+            Log.d("handleAnswer", "Answer invalid!");
+        }
+
+        if(questionCounter >= QUESTIONS_LIMIT) {
+            Log.d("handleAnswer", "Question limit reached!");
+            navigateToMenu();
+        }
+    }
+
+    private boolean validateAnswer(Answer answer) {
+        Log.d("validateAnswer", "Checking if answer is valid!");
+        return true;
+    }
+
+    private void navigateToMenu() {
+        Log.d("navigateToMenu", "Moving back to menu!");
+        //todo: return to menu -how?
+        //((MainActivity) getActivity()).switchToFragment(new MenuFragment(), MenuFragment.class.getName(), MenuFragment.class.getName());
     }
 
 }
