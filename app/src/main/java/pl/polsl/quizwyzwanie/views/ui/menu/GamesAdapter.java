@@ -49,7 +49,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
                 gameFragment = new GameFragment();
                 arguments.putSerializable("game", games.get(position));
                 gameFragment.setArguments(arguments);
-                activity.switchToFragment(gameFragment,
+                activity.switchToFragmentWithBackStack(gameFragment,
                         GameFragment.class.getName(), MenuFragment.class.getName());
             }
         });

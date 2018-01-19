@@ -62,7 +62,7 @@ public class MenuFragment extends Fragment {
         arguments.putSerializable("game", game);
 
         gameFragment.setArguments(arguments);
-        ((MainActivity) getActivity()).switchToFragment(gameFragment,
+        ((MainActivity) getActivity()).switchToFragmentWithBackStack(gameFragment,
                 GameFragment.class.getName(), MenuFragment.class.getName());
     }
 
