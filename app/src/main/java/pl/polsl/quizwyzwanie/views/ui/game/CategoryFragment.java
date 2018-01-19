@@ -2,6 +2,7 @@ package pl.polsl.quizwyzwanie.views.ui.game;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.views.domain.model.Category;
+import pl.polsl.quizwyzwanie.views.domain.model.Question;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 
 public class CategoryFragment extends Fragment {
@@ -36,24 +38,26 @@ public class CategoryFragment extends Fragment {
     private List<Category> categoriesList = new ArrayList<>();
     private List<Category> threeRandomCategoriesList = new ArrayList<>();
 
+    private List<Question> questions = new ArrayList<>();
+
     @OnClick(R.id.fragment_category_first_btn)
     public void onFirstCategoryClick() {
         ((MainActivity) getActivity()).switchToFragment(
-                createQuestionFragmentForCategory(firstBtn.getText().toString().toLowerCase()),
+                createQuestionFragmentForCategory(firstBtn.getText().toString()),
                 QuestionFragment.class.getName(), CategoryFragment.class.getName());
     }
 
     @OnClick(R.id.fragment_category_second_btn)
     public void onSecondCategoryClick() {
         ((MainActivity) getActivity()).switchToFragment(
-                createQuestionFragmentForCategory(secondBtn.getText().toString().toLowerCase()),
+                createQuestionFragmentForCategory(secondBtn.getText().toString()),
                 QuestionFragment.class.getName(), CategoryFragment.class.getName());
     }
 
     @OnClick(R.id.fragment_category_third_btn)
     public void onThirdCategoryClick() {
         ((MainActivity) getActivity()).switchToFragment(
-                createQuestionFragmentForCategory(thirdBtn.getText().toString().toLowerCase()),
+                createQuestionFragmentForCategory(thirdBtn.getText().toString()),
                 QuestionFragment.class.getName(), CategoryFragment.class.getName());
     }
 
@@ -67,10 +71,22 @@ public class CategoryFragment extends Fragment {
     }
 
     private QuestionFragment createQuestionFragmentForCategory(String category) {
-        Bundle arguments = new Bundle();
-        arguments.putString("category", category);
+
+
+        for (Category categoryObject : threeRandomCategoriesList) {
+            if (categoryObject.getName().equals(category)) {
+                questions = getQuestionsInCategoryForRound(categoryObject);
+            }
+        }
 
         QuestionFragment questionFragment = new QuestionFragment();
+
+        Bundle arguments = new Bundle();
+        arguments.putSerializable("question0", questions.get(0));
+        arguments.putSerializable("question1", questions.get(1));
+        arguments.putSerializable("question2", questions.get(2));
+        arguments.putString("category", category);
+
         questionFragment.setArguments(arguments);
         return questionFragment;
     }
@@ -96,6 +112,7 @@ public class CategoryFragment extends Fragment {
 
                 threeRandomCategoriesList = getThreeRandomCategories(categoriesList);
 
+                //TODO: what if there is less than 3 categories?
                 firstBtn.setText(threeRandomCategoriesList.get(0).getName());
                 secondBtn.setText(threeRandomCategoriesList.get(1).getName());
                 thirdBtn.setText(threeRandomCategoriesList.get(2).getName());
@@ -105,15 +122,28 @@ public class CategoryFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("Categories read failed: " + databaseError.getCode());
             }
+
         });
     }
 
     private List<Category> getThreeRandomCategories(List<Category> allCategories) {
-        List<Category> randomList = new ArrayList<>(allCategories);
-        Collections.shuffle(randomList);
-        //TODO: what if there is less than 3 elements in allCategories? :P
-        return randomList.subList(0, 3);
+        List<Category> randomCategoriesList = new ArrayList<>(allCategories);
+        Collections.shuffle(randomCategoriesList);
 
+        //TODO: what if there is less than 3 elements in allCategories? :P
+        final int HOW_MANY_CATEGORIES = 3;
+        return randomCategoriesList.subList(0, HOW_MANY_CATEGORIES);
+
+    }
+
+
+    private List<Question> getQuestionsInCategoryForRound(Category category) {
+        List<Question> randomQuestionsList = new ArrayList<>(category.getQuestions());
+        Collections.shuffle(randomQuestionsList);
+
+        //TODO: what if there is less than 3 questions in category? xD
+        final int HOW_MANY_QUESTIONS = 3;
+        return randomQuestionsList.subList(0, HOW_MANY_QUESTIONS);
     }
 
 }
