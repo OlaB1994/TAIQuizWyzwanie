@@ -6,19 +6,19 @@ import java.util.List;
  * Created by Mateusz on 17.01.2018.
  */
 
-public class User {
+public class Player {
 
     private boolean isSurrender;
     private String email;
     private boolean isFinished;
     private String displayName;
-    private List<Object> stateOfLastThreeAnswers;
+    private List<StateOfLastThreeAnswers> stateOfLastThreeAnswers;
     private boolean myTurn;
     private Integer points;
 
-    public User() {    }
+    public Player() {    }
 
-    public User(Boolean isSurrender, String email, Boolean isFinished, String displayName, List<Object> stateOfLastThreeAnswers, Boolean myTurn, Integer points) {
+    public Player(boolean isSurrender, String email, boolean isFinished, String displayName, List<StateOfLastThreeAnswers> stateOfLastThreeAnswers, boolean myTurn, Integer points) {
         this.isSurrender = isSurrender;
         this.email = email;
         this.isFinished = isFinished;
@@ -44,7 +44,7 @@ public class User {
         return displayName;
     }
 
-    public List<Object> getStateOfLastThreeAnswers() {
+    public List<StateOfLastThreeAnswers> getStateOfLastThreeAnswers() {
         return stateOfLastThreeAnswers;
     }
 

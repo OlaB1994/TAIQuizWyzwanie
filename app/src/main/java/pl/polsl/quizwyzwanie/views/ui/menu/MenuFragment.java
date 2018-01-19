@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.views.domain.model.Game;
-import pl.polsl.quizwyzwanie.views.domain.model.User;
+import pl.polsl.quizwyzwanie.views.domain.model.Player;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 import pl.polsl.quizwyzwanie.views.ui.game.GameFragment;
 
@@ -47,11 +47,13 @@ public class MenuFragment extends Fragment {
     @OnClick(R.id.fragment_menu_new_game_btn)
     public void onNewGameClick() {
         //todo tutaj trzeba stworzyć nową grę i pusha zrobić do bazy, potem te dane wcisnąć do bundla
-        Game game = new Game(null, null, null, null, false,
-                new User(false, "email", false, username, null, true,0),
-                new User(false, "email", false, "oponentName", null, true, 0),
+        Game game = new Game(null, null, null, false,
+                new Player(false, "email", false, username, null, true,0),
+                new Player(false, "email", false, "oponentName", null, true, 0),
                 username, "none");
         //todo ten game wyżej uzupełnić poprawnymi danymi.
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("games");
 
         GameFragment gameFragment = new GameFragment();
         Bundle arguments = new Bundle();

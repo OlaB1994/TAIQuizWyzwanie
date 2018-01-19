@@ -10,6 +10,13 @@ public class Game implements Comparable<Game>, Serializable {
     public static final int STATE_FINISHED = 0;
     public static final int STATE_WAITING = 1;
     public static final int STATE_YOUR_TURN = 2;
+
+    public static final int ROUND_PER_GAME = 6;
+    public static final int ANSWER_UNDEFINED = 0;
+    public static final int ANSWER_CORRECT = 1;
+    public static final int ANSWER_WRONG = 2;
+    public static final int ANSWER_DO_NOT_SHOW = 3;
+    public static int[] DEFAULT_ANSWER = new int[]{ANSWER_UNDEFINED, ANSWER_UNDEFINED, ANSWER_UNDEFINED};
 //
 //    private String opponentUsername;
 //    private int myPoints;
@@ -18,21 +25,19 @@ public class Game implements Comparable<Game>, Serializable {
 
 
     private String actualCategoryName;
-    private List<Object> categoryRounds;
-    private List<Object> choosenCategories;
+    private List<CategoryRounds> categoryRounds;
     private String id;
     private boolean isFinished;
-    private User user1;
-    private User user2;
+    private Player user1;
+    private Player user2;
     private String whoChoosedCategoryLast;
     private String whoWinGame;
 
     public Game() {    }
 
-    public Game(String actualCategoryName, List<Object> categoryRounds, List<Object> choosenCategories, String id, Boolean isFinished, User user1, User user2, String whoChoosedCategoryLast, String whoWinGame) {
+    public Game(String actualCategoryName, List<CategoryRounds> categoryRounds, String id, Boolean isFinished, Player user1, Player user2, String whoChoosedCategoryLast, String whoWinGame) {
         this.actualCategoryName = actualCategoryName;
         this.categoryRounds = categoryRounds;
-        this.choosenCategories = choosenCategories;
         this.id = id;
         this.isFinished = isFinished;
         this.user1 = user1;
@@ -45,12 +50,8 @@ public class Game implements Comparable<Game>, Serializable {
         return actualCategoryName;
     }
 
-    public List<Object> getCategoryRounds() {
+    public List<CategoryRounds> getCategoryRounds() {
         return categoryRounds;
-    }
-
-    public List<Object> getChoosenCategories() {
-        return choosenCategories;
     }
 
     public String getId() {
@@ -61,11 +62,11 @@ public class Game implements Comparable<Game>, Serializable {
         return isFinished;
     }
 
-    public User getUser1() {
+    public Player getUser1() {
         return user1;
     }
 
-    public User getUser2() {
+    public Player getUser2() {
         return user2;
     }
 
