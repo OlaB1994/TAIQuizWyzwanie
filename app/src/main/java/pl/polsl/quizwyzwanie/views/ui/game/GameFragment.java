@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.views.domain.model.AppUser;
 import pl.polsl.quizwyzwanie.views.domain.model.Game;
 import pl.polsl.quizwyzwanie.views.domain.model.RoundResult;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
@@ -47,9 +48,8 @@ public class GameFragment extends Fragment {
     @BindView(R.id.fragment_game_round_results_rv)
     RecyclerView resultsRv;
 
-    String username = "";
-    String userId = "";
     Game game;
+    private AppUser user;
 
     @OnClick(R.id.fragment_game_surrender_btn)
     public void onSurrenderClick(){
@@ -74,7 +74,7 @@ public class GameFragment extends Fragment {
 
     private void setupView() {
         //todo: setup usernames and results
-        myUsernameTv.setText(username);
+        myUsernameTv.setText(user.getDisplayName());
         opponentUsernameTv.setText(game.getOpponentUsername());
 
         resultsRv.setLayoutManager(new LinearLayoutManager(getContext(),
@@ -85,8 +85,7 @@ public class GameFragment extends Fragment {
     private void setupGame() {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            username = bundle.getString("username");
-            userId = bundle.getString("userId");
+            user = (AppUser) bundle.getSerializable("user");
             game = (Game)bundle.getSerializable("game");
         }
     }

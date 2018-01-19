@@ -26,6 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import butterknife.ButterKnife;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.views.domain.model.AppUser;
 import pl.polsl.quizwyzwanie.views.ui.dialogs.LoadingDialog;
 import pl.polsl.quizwyzwanie.views.ui.menu.MenuFragment;
 
@@ -39,21 +40,19 @@ public class MainActivity extends AppCompatActivity implements
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private String username = "";
-    private String photoUrl = null;
     private GoogleApiClient googleApiClient;
     private LoadingDialog loadingDialog;
-    private String userUid;
+    private String email;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        fragmentManager = getSupportFragmentManager();
         initializeFirebase();
         handleLogin();
         initializeDialog();
-        fragmentManager = getSupportFragmentManager();
-        addFragment();
     }
 
     private void initializeDialog() {
@@ -64,14 +63,22 @@ public class MainActivity extends AppCompatActivity implements
     private void handleLogin() {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser == null) {
+        boolean userWasTaken = getUserDataFromAuth();
+        if (!userWasTaken) {
             signIn();
-        } else {
+        }else{
+            addFragment();
+        }
+    }
+
+    private boolean getUserDataFromAuth() {
+        firebaseUser = firebaseAuth.getCurrentUser();
+        if(firebaseUser != null){
             username = firebaseUser.getDisplayName();
-            userUid = firebaseUser.getUid();
-            if (firebaseUser.getPhotoUrl() != null) {
-                photoUrl = firebaseUser.getPhotoUrl().toString();
-            }
+            email = firebaseUser.getEmail();
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -90,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements
         MenuFragment fragment = new MenuFragment();
         Bundle arguments = new Bundle();
         arguments.putString("username", username);
-        arguments.putString("userId", userUid);
+        arguments.putString("email", email);
         fragment.setArguments(arguments);
         fragmentManager.beginTransaction()
                 .add(R.id.activity_main_fragment_container_fl, fragment, MenuFragment.class.getName())
@@ -152,6 +159,9 @@ public class MainActivity extends AppCompatActivity implements
                         if (!task.isSuccessful()) {
                             signInError();
                         }
+                        // now menu can be displayed
+                        getUserDataFromAuth();
+                        addFragment();
                     }
                 });
     }

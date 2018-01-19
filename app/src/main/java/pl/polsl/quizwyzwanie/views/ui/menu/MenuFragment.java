@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.views.domain.model.AppUser;
 import pl.polsl.quizwyzwanie.views.domain.model.Game;
 import pl.polsl.quizwyzwanie.views.domain.model.Player;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
@@ -39,10 +40,11 @@ public class MenuFragment extends Fragment {
     RecyclerView gamesRv;
 
     String username = "";
-    String userId = "";
+    String email = "";
     private List<Game> gamesList = new ArrayList<>();
     private GamesAdapter adapter;
     private Bundle bundle;
+    private AppUser currentUser;
 
     @OnClick(R.id.fragment_menu_new_game_btn)
     public void onNewGameClick() {
@@ -57,8 +59,7 @@ public class MenuFragment extends Fragment {
 
         GameFragment gameFragment = new GameFragment();
         Bundle arguments = new Bundle();
-        arguments.putString("username", username);
-        arguments.putString("userId", userId);
+        arguments.putSerializable("user", currentUser);
         arguments.putSerializable("game", game);
 
         gameFragment.setArguments(arguments);
@@ -80,15 +81,67 @@ public class MenuFragment extends Fragment {
         bundle = this.getArguments();
         if (bundle != null) {
             username = bundle.getString("username");
-            userId = bundle.getString("userId");
+            email = bundle.getString("email");
         }
     }
 
     private void setupView() {
         usernameTv.setText(username);
-        new GetData().execute();
+        new GetUser().execute();
     }
 
+
+    private class GetUser extends AsyncTask<Void, Void, AppUser> {
+
+        @Override
+        protected void onPreExecute() {
+            ((MainActivity)getActivity()).showDialog();
+        }
+
+        @Override
+        protected AppUser doInBackground(Void... voids) {
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference userRef = rootRef.child("users");
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                        AppUser user = snapshot.getValue(AppUser.class);
+                        Log.e("getData", email);
+                        if(user.getEmail().equals(email)) {
+                            currentUser = user;
+                            new GetData().execute();
+                            return;
+                        }
+                    }
+                    currentUser = createUser();
+                    new GetData().execute();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+            return currentUser;
+        }
+
+
+        @Override
+        protected void onPostExecute(AppUser user) {
+            ((MainActivity)getActivity()).dismissDialog();
+        }
+    }
+
+    private AppUser createUser() {
+        AppUser newUser = new AppUser(username, email);
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userRef = rootRef.child("users");
+        DatabaseReference newUserRef = userRef.push();
+        newUser.setId(newUserRef.getKey());
+        newUserRef.setValue(newUser);
+        return newUser;
+    }
 
     private class GetData extends AsyncTask<Void, Void, List<Game>> {
 
@@ -111,7 +164,10 @@ public class MenuFragment extends Fragment {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Game game = snapshot.getValue(Game.class);
-                        gamesList.add(game);
+                        if(game.getUser1().getEmail().equals(currentUser.getEmail())
+                                || game.getUser2().getEmail().equals(currentUser.getEmail())){
+                            gamesList.add(game);
+                        }
 
                         Log.d("TMP", game.getOpponentUsername());
                     }
