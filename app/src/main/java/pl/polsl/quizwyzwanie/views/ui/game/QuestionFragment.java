@@ -1,5 +1,6 @@
 package pl.polsl.quizwyzwanie.views.ui.game;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -22,12 +23,14 @@ import pl.polsl.quizwyzwanie.views.ui.menu.MenuFragment;
 public class QuestionFragment extends Fragment {
 
     private static final int QUESTIONS_LIMIT = 3;
+    public static final int MAX_TIME_IN_MILIS = 5000;
+
     private enum Answer {
         A, B, C, D
     }
     private int questionCounter;
 
-    int counter=0;
+    int counter=5;
     String currentCategory;
 
     @BindView(R.id.fragment_question_first_indicator_iv)
@@ -69,6 +72,7 @@ public class QuestionFragment extends Fragment {
         handleAnswer(Answer.D);
     }
 
+    @SuppressLint("NewApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
@@ -79,18 +83,27 @@ public class QuestionFragment extends Fragment {
         if(bundle != null){
             currentCategory = bundle.getString("category");
         }
+
+        timerPb.setMax(MAX_TIME_IN_MILIS);
         setupTimer();
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        setupTimer();
+    }
+
     private void setupTimer() {
-        CountDownTimer countDownTimer=new CountDownTimer(5000,1000) {
+        timerPb.setProgress(MAX_TIME_IN_MILIS);
+        CountDownTimer countDownTimer=new CountDownTimer(MAX_TIME_IN_MILIS,500) {
 
             @Override
             public void onTick(long millisUntilFinished) {
                 counter--;
-                timerPb.setProgress(counter*100/(5000/1000));
 
+                timerPb.setProgress((int)millisUntilFinished);
             }
 
             @Override

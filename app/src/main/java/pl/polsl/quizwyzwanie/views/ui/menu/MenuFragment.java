@@ -148,6 +148,7 @@ public class MenuFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             ((MainActivity)getActivity()).showDialog();
+            gamesList = new ArrayList<>();
             gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
                     OrientationHelper.VERTICAL, false));
             adapter = new GamesAdapter((MainActivity) getActivity(), gamesList, bundle);
@@ -158,6 +159,7 @@ public class MenuFragment extends Fragment {
         protected List<Game> doInBackground(Void... voids) {
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             DatabaseReference gamesRef = rootRef.child("games");
+
             gamesRef.addValueEventListener(new ValueEventListener() {
 
                 @Override

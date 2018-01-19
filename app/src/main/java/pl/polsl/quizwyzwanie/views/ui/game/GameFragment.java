@@ -62,6 +62,7 @@ public class GameFragment extends Fragment {
         return view;
     }
 
+
     private void setupView() {
         //todo: setup usernames and results
         myUsernameTv.setText(user.getDisplayName());
