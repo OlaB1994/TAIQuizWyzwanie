@@ -104,12 +104,21 @@ public class MainActivity extends AppCompatActivity implements
                 .commit();
     }
 
-    public void switchToFragment(@NonNull final Fragment fragment, @NonNull final String tag, @NonNull final String backstack) {
-        if (fragmentManager.findFragmentByTag(tag) != null) return;
+    public void switchToFragmentWithBackStack(@NonNull final Fragment fragment, @NonNull final String tag, @NonNull final String backstack) {
         try {
             fragmentManager.beginTransaction()
-                    .add(R.id.activity_main_fragment_container_fl, fragment, tag)
+                    .replace(R.id.activity_main_fragment_container_fl, fragment, tag)
                     .addToBackStack(backstack)
+                    .commit();
+        } catch (Exception error) {
+            Log.e(fragment.getActivity().getClass().getName(), error.getMessage());
+        }
+    }
+
+    public void switchToFragment(@NonNull final Fragment fragment, @NonNull final String tag) {
+        try {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.activity_main_fragment_container_fl, fragment, tag)
                     .commit();
         } catch (Exception error) {
             Log.e(fragment.getActivity().getClass().getName(), error.getMessage());

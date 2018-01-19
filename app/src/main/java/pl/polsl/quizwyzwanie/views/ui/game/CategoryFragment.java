@@ -40,21 +40,21 @@ public class CategoryFragment extends Fragment {
     public void onFirstCategoryClick() {
         ((MainActivity) getActivity()).switchToFragment(
                 createQuestionFragmentForCategory(firstBtn.getText().toString().toLowerCase()),
-                QuestionFragment.class.getName(), CategoryFragment.class.getName());
+                QuestionFragment.class.getName());
     }
 
     @OnClick(R.id.fragment_category_second_btn)
     public void onSecondCategoryClick() {
         ((MainActivity) getActivity()).switchToFragment(
                 createQuestionFragmentForCategory(secondBtn.getText().toString().toLowerCase()),
-                QuestionFragment.class.getName(), CategoryFragment.class.getName());
+                QuestionFragment.class.getName());
     }
 
     @OnClick(R.id.fragment_category_third_btn)
     public void onThirdCategoryClick() {
         ((MainActivity) getActivity()).switchToFragment(
                 createQuestionFragmentForCategory(thirdBtn.getText().toString().toLowerCase()),
-                QuestionFragment.class.getName(), CategoryFragment.class.getName());
+                QuestionFragment.class.getName());
     }
 
     @Override

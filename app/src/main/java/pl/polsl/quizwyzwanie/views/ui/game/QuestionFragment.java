@@ -128,7 +128,7 @@ public class QuestionFragment extends Fragment {
     private void navigateToMenu() {
         Log.d("navigateToMenu", "Moving back to menu!");
         //todo: return to menu -how?
-        //((MainActivity) getActivity()).switchToFragment(new MenuFragment(), MenuFragment.class.getName(), MenuFragment.class.getName());
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
 }
