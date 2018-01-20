@@ -17,8 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.views.domain.model.Question;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
-import pl.polsl.quizwyzwanie.views.ui.menu.MenuFragment;
 
 public class QuestionFragment extends Fragment {
 
@@ -28,6 +28,7 @@ public class QuestionFragment extends Fragment {
     private enum Answer {
         A, B, C, D
     }
+
     private int questionCounter;
 
     int counter=5;
@@ -53,22 +54,22 @@ public class QuestionFragment extends Fragment {
     ProgressBar timerPb;
 
     @OnClick(R.id.fragment_question_answer_a_btn)
-    public void onAnswerAClick(){
+    public void onAnswerAClick() {
         handleAnswer(Answer.A);
     }
 
     @OnClick(R.id.fragment_question_answer_b_btn)
-    public void onAnswerBClick(){
+    public void onAnswerBClick() {
         handleAnswer(Answer.B);
     }
 
     @OnClick(R.id.fragment_question_answer_c_btn)
-    public void onAnswerCClick(){
+    public void onAnswerCClick() {
         handleAnswer(Answer.C);
     }
 
     @OnClick(R.id.fragment_question_answer_d_btn)
-    public void onAnswerDClick(){
+    public void onAnswerDClick() {
         handleAnswer(Answer.D);
     }
 
@@ -79,12 +80,27 @@ public class QuestionFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, view);
 
+
+        Question question = new Question();
         Bundle bundle = this.getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             currentCategory = bundle.getString("category");
+            question = (Question) bundle.getSerializable("question" + questionCounter);
+            questionCounter = bundle.getInt("questionCounter", 0);
         }
 
         timerPb.setMax(MAX_TIME_IN_MILIS);
+
+
+        if (question != null) {
+            questionTv.setText(question.getTresc());
+            answerABtn.setText(question.getAnswers().get(0).getTresc());
+            answerBBtn.setText(question.getAnswers().get(1).getTresc());
+            answerCBtn.setText(question.getAnswers().get(2).getTresc());
+            answerDBtn.setText(question.getAnswers().get(3).getTresc());
+        }
+
+
         setupTimer();
         return view;
     }
@@ -119,15 +135,17 @@ public class QuestionFragment extends Fragment {
     private void handleAnswer(Answer answer) {
 
         questionCounter++;
-        if(validateAnswer(answer)) {
+        if (validateAnswer(answer)) {
             //TODO: handle correct answer
             Log.d("handleAnswer", "Answer correct!");
+            navigateToNextQuestion();
         } else {
             //TODO: handle invalid answer
             Log.d("handleAnswer", "Answer invalid!");
+            navigateToNextQuestion();
         }
 
-        if(questionCounter >= QUESTIONS_LIMIT) {
+        if (questionCounter >= QUESTIONS_LIMIT) {
             Log.d("handleAnswer", "Question limit reached!");
             navigateToMenu();
         }
@@ -136,6 +154,13 @@ public class QuestionFragment extends Fragment {
     private boolean validateAnswer(Answer answer) {
         Log.d("validateAnswer", "Checking if answer is valid!");
         return true;
+    }
+
+    private void navigateToNextQuestion() {
+        QuestionFragment questionFragment = new QuestionFragment();
+        Bundle arguments = new Bundle();
+        arguments.putInt("questionCounter", questionCounter);
+        ((MainActivity) getActivity()).switchToFragment(questionFragment, QuestionFragment.class.getName(), QuestionFragment.class.getName());
     }
 
     private void navigateToMenu() {
