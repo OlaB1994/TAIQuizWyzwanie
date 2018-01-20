@@ -18,7 +18,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.views.domain.model.Question;
-import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 
 public class QuestionFragment extends Fragment {
 
@@ -79,18 +78,20 @@ public class QuestionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, view);
+        prepareAndShowNextQuestion();
 
+        return view;
+    }
 
+    private void prepareAndShowNextQuestion() {
         Question question = new Question();
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             currentCategory = bundle.getString("category");
             question = (Question) bundle.getSerializable("question" + questionCounter);
-            questionCounter = bundle.getInt("questionCounter", 0);
         }
 
         timerPb.setMax(MAX_TIME_IN_MILIS);
-
 
         if (question != null) {
             questionTv.setText(question.getTresc());
@@ -100,9 +101,7 @@ public class QuestionFragment extends Fragment {
             answerDBtn.setText(question.getAnswers().get(3).getTresc());
         }
 
-
         setupTimer();
-        return view;
     }
 
     @Override
@@ -138,11 +137,11 @@ public class QuestionFragment extends Fragment {
         if (validateAnswer(answer)) {
             //TODO: handle correct answer
             Log.d("handleAnswer", "Answer correct!");
-            navigateToNextQuestion();
+            prepareAndShowNextQuestion();
         } else {
             //TODO: handle invalid answer
             Log.d("handleAnswer", "Answer invalid!");
-            navigateToNextQuestion();
+            prepareAndShowNextQuestion();
         }
 
         if (questionCounter >= QUESTIONS_LIMIT) {
@@ -156,12 +155,7 @@ public class QuestionFragment extends Fragment {
         return true;
     }
 
-    private void navigateToNextQuestion() {
-        QuestionFragment questionFragment = new QuestionFragment();
-        Bundle arguments = new Bundle();
-        arguments.putInt("questionCounter", questionCounter);
-        ((MainActivity) getActivity()).switchToFragment(questionFragment, QuestionFragment.class.getName());
-    }
+
 
     private void navigateToMenu() {
         Log.d("navigateToMenu", "Moving back to menu!");
