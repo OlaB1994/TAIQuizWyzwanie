@@ -31,7 +31,7 @@ public class QuestionFragment extends Fragment {
 
     private int questionCounter;
 
-    int counter=5;
+    int counter = 5;
     String currentCategory;
 
     @BindView(R.id.fragment_question_first_indicator_iv)
@@ -113,13 +113,13 @@ public class QuestionFragment extends Fragment {
 
     private void setupTimer() {
         timerPb.setProgress(MAX_TIME_IN_MILIS);
-        CountDownTimer countDownTimer=new CountDownTimer(MAX_TIME_IN_MILIS,500) {
+        CountDownTimer countDownTimer = new CountDownTimer(MAX_TIME_IN_MILIS, 500) {
 
             @Override
             public void onTick(long millisUntilFinished) {
                 counter--;
 
-                timerPb.setProgress((int)millisUntilFinished);
+                timerPb.setProgress((int) millisUntilFinished);
             }
 
             @Override
@@ -160,7 +160,7 @@ public class QuestionFragment extends Fragment {
         QuestionFragment questionFragment = new QuestionFragment();
         Bundle arguments = new Bundle();
         arguments.putInt("questionCounter", questionCounter);
-        ((MainActivity) getActivity()).switchToFragment(questionFragment, QuestionFragment.class.getName(), QuestionFragment.class.getName());
+        ((MainActivity) getActivity()).switchToFragment(questionFragment, QuestionFragment.class.getName());
     }
 
     private void navigateToMenu() {
