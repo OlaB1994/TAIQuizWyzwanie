@@ -28,6 +28,9 @@ public class QuestionFragment extends Fragment {
         A, B, C, D
     }
 
+    private static final int ANSWER_WRONG = 0;
+    private static final int ANSWER_CORRECT = 1;
+
     private int questionCounter;
 
     int counter = 5;
@@ -137,10 +140,12 @@ public class QuestionFragment extends Fragment {
         if (validateAnswer(answer)) {
             //TODO: handle correct answer
             Log.d("handleAnswer", "Answer correct!");
+            setupAnswerIndicator(ANSWER_CORRECT);
             prepareAndShowNextQuestion();
         } else {
             //TODO: handle invalid answer
             Log.d("handleAnswer", "Answer invalid!");
+            setupAnswerIndicator(ANSWER_WRONG);
             prepareAndShowNextQuestion();
         }
 
@@ -150,11 +155,28 @@ public class QuestionFragment extends Fragment {
         }
     }
 
+    private void setupAnswerIndicator(int answer) {
+        if (questionCounter == 1) {
+            setupAnswerColor(firstIndicatorIv, answer);
+        } else if (questionCounter == 2) {
+            setupAnswerColor(secondIndicatorIv, answer);
+        } else if (questionCounter == 3) {
+            setupAnswerColor(thirdIndicatorIv, answer);
+        }
+    }
+
+    private void setupAnswerColor(ImageView imageView, int answer) {
+        if (answer == ANSWER_CORRECT) {
+            imageView.setColorFilter(getContext().getResources().getColor(R.color.question_correct));
+        } else if (answer == ANSWER_WRONG) {
+            imageView.setColorFilter(getContext().getResources().getColor(R.color.question_wrong));
+        }
+    }
+
     private boolean validateAnswer(Answer answer) {
         Log.d("validateAnswer", "Checking if answer is valid!");
         return true;
     }
-
 
 
     private void navigateToMenu() {

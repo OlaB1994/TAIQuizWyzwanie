@@ -9,4 +9,7 @@
     <color name="entry_games_correct">#697A21</color>
     <color name="entry_games_undefined">#534D41</color>
     <color name="entry_games_do_not_show">#29335C</color>
+
+    <color name="question_wrong">#DB2B39</color>
+    <color name="question_correct">#697A21</color>
 </resources>
