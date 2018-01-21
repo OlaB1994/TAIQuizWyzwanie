@@ -84,8 +84,28 @@ public class QuestionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, view);
+        initializeTimer();
+        questionCounter = 0;
         prepareAndShowNextQuestion();
         return view;
+    }
+
+    private void initializeTimer() {
+        countDownTimer = new CountDownTimer(MAX_TIME_IN_MILIS, 500) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                counter--;
+                timerPb.setProgress((int) millisUntilFinished);
+            }
+
+            @Override
+            public void onFinish() {
+                counter--;
+                timerPb.setProgress(0);
+                goToNextQuestion();
+            }
+        };
     }
 
     private void prepareAndShowNextQuestion() {
@@ -108,36 +128,12 @@ public class QuestionFragment extends Fragment {
             questionAnswers[2] = question.getAnswers().get(2).isCorrect();
             questionAnswers[3] = question.getAnswers().get(3).isCorrect();
         }
-
         setupTimer();
     }
 
     private void setupTimer() {
         timerPb.setProgress(MAX_TIME_IN_MILIS);
-        countDownTimer = new CountDownTimer(MAX_TIME_IN_MILIS, 500) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                counter--;
-                timerPb.setProgress((int) millisUntilFinished);
-            }
-
-            @Override
-            public void onFinish() {
-                counter--;
-                timerPb.setProgress(0);
-                goToNextQuestion();
-            }
-        };
         countDownTimer.start();
-    }
-
-    @Override
-    public void onPause() {
-        resetTimer();
-        //todo: send info to database about wrong answers for the rest of questions
-        navigateToMenu();
-        super.onPause();
     }
 
     private void goToNextQuestion() {
@@ -150,16 +146,24 @@ public class QuestionFragment extends Fragment {
 
     private void handleAnswer(Answer answer) {
         checkAnswer(answer);
-        if (countDownTimer == null) goToNextQuestion();
+        if (countDownTimer == null)
+            goToNextQuestion();
         else {
             resetTimer();
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        resetTimer();
+    }
+
     private void resetTimer() {
-        countDownTimer.onFinish();
+        Log.i(this.getClass().getName(), "timer reset");
+        if(countDownTimer == null) return;
         countDownTimer.cancel();
-        countDownTimer = null;
+        countDownTimer.onFinish();
     }
 
     private void checkAnswer(Answer answer) {
@@ -195,13 +199,13 @@ public class QuestionFragment extends Fragment {
     }
 
     private void setupAnswerIndicator(int answer) {
-        if (questionCounter == 1) {
+        if (questionCounter == 0) {
             Log.d("setupAnswerIndicator", "First question answered!");
             setupAnswerColor(firstIndicatorIv, answer);
-        } else if (questionCounter == 2) {
+        } else if (questionCounter == 1) {
             Log.d("setupAnswerIndicator", "Second question answered!");
             setupAnswerColor(secondIndicatorIv, answer);
-        } else if (questionCounter == 3) {
+        } else if (questionCounter == 2) {
             Log.d("setupAnswerIndicator", "Third question answered!");
             setupAnswerColor(thirdIndicatorIv, answer);
         }
@@ -226,7 +230,6 @@ public class QuestionFragment extends Fragment {
 
     private void navigateToMenu() {
         Log.d("navigateToMenu", "Moving back to menu!");
-        //todo: return to menu -how?
         getActivity().getSupportFragmentManager().popBackStack();
     }
 

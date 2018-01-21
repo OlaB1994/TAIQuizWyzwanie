@@ -156,6 +156,7 @@ public class MenuFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
+            if(getActivity()!=null)
             ((MainActivity) getActivity()).showDialog();
             gamesList = new ArrayList<>();
             gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
