@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,12 +46,21 @@ public class MenuFragment extends Fragment {
     private GamesAdapter adapter;
     private Bundle bundle;
     private AppUser currentUser;
+    private boolean isButtonActive = false;
 
     @OnClick(R.id.fragment_menu_new_game_btn)
     public void onNewGameClick() {
+        if (isButtonActive) {
+            startNewGame();
+        } else {
+            Toast.makeText(getContext(), getString(R.string.waiting_initialize), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void startNewGame() {
         //todo tutaj trzeba stworzyć nową grę i pusha zrobić do bazy, potem te dane wcisnąć do bundla
         Game game = new Game(null, null, null, false,
-                new Player(false, "email", false, username, null, true,0),
+                new Player(false, "email", false, username, null, true, 0),
                 new Player(false, "email", false, "oponentName", null, true, 0),
                 username, "none");
         //todo ten game wyżej uzupełnić poprawnymi danymi.
@@ -95,7 +105,7 @@ public class MenuFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            ((MainActivity)getActivity()).showDialog();
+            ((MainActivity) getActivity()).showDialog();
         }
 
         @Override
@@ -105,10 +115,10 @@ public class MenuFragment extends Fragment {
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         AppUser user = snapshot.getValue(AppUser.class);
                         Log.e("getData", email);
-                        if(user.getEmail().equals(email)) {
+                        if (user.getEmail().equals(email)) {
                             currentUser = user;
                             new GetData().execute();
                             return;
@@ -129,7 +139,6 @@ public class MenuFragment extends Fragment {
 
         @Override
         protected void onPostExecute(AppUser user) {
-            ((MainActivity)getActivity()).dismissDialog();
         }
     }
 
@@ -147,7 +156,7 @@ public class MenuFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            ((MainActivity)getActivity()).showDialog();
+            ((MainActivity) getActivity()).showDialog();
             gamesList = new ArrayList<>();
             gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
                     OrientationHelper.VERTICAL, false));
@@ -166,14 +175,16 @@ public class MenuFragment extends Fragment {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Game game = snapshot.getValue(Game.class);
-                        if(game.getUser1().getEmail().equals(currentUser.getEmail())
-                                || game.getUser2().getEmail().equals(currentUser.getEmail())){
+                        if (game.getUser1().getEmail().equals(currentUser.getEmail())
+                                || game.getUser2().getEmail().equals(currentUser.getEmail())) {
                             gamesList.add(game);
                         }
 
                         Log.d("TMP", game.getOpponentUsername());
                     }
                     Collections.sort(gamesList);
+                    isButtonActive = true;
+                    ((MainActivity) getActivity()).dismissDialog();
                     adapter.notifyDataSetChanged();
                 }
 
@@ -188,7 +199,7 @@ public class MenuFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Game> gamesList) {
-            ((MainActivity)getActivity()).dismissDialog();
+            ((MainActivity) getActivity()).dismissDialog();
         }
     }
 }

@@ -23,6 +23,7 @@ public class QuestionFragment extends Fragment {
 
     private static final int QUESTIONS_LIMIT = 3;
     public static final int MAX_TIME_IN_MILIS = 5000;
+    private CountDownTimer countDownTimer;
 
     private enum Answer {
         A, B, C, D
@@ -83,7 +84,6 @@ public class QuestionFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, view);
         prepareAndShowNextQuestion();
-
         return view;
     }
 
@@ -94,9 +94,7 @@ public class QuestionFragment extends Fragment {
             currentCategory = bundle.getString("category");
             question = (Question) bundle.getSerializable("question" + questionCounter);
         }
-
         timerPb.setMax(MAX_TIME_IN_MILIS);
-
         if (question != null) {
             questionTv.setText(question.getTresc());
             answerABtn.setText(question.getAnswers().get(0).getTresc());
@@ -113,26 +111,18 @@ public class QuestionFragment extends Fragment {
         setupTimer();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        setupTimer();
-    }
-
     private void setupTimer() {
         timerPb.setProgress(MAX_TIME_IN_MILIS);
-        CountDownTimer countDownTimer = new CountDownTimer(MAX_TIME_IN_MILIS, 500) {
+        countDownTimer = new CountDownTimer(MAX_TIME_IN_MILIS, 500) {
 
             @Override
             public void onTick(long millisUntilFinished) {
                 counter--;
-
                 timerPb.setProgress((int) millisUntilFinished);
             }
 
             @Override
             public void onFinish() {
-                //Do what you want
                 counter--;
                 timerPb.setProgress(0);
             }
@@ -141,7 +131,9 @@ public class QuestionFragment extends Fragment {
     }
 
     private void handleAnswer(Answer answer) {
-
+        countDownTimer.onFinish();
+        countDownTimer.cancel();
+        countDownTimer = null;
         questionCounter++;
         if (validateAnswer(answer)) {
             //TODO: handle correct answer

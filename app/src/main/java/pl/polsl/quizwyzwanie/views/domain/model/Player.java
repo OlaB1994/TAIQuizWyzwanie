@@ -1,12 +1,13 @@
 package pl.polsl.quizwyzwanie.views.domain.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Mateusz on 17.01.2018.
  */
 
-public class Player {
+public class Player implements Serializable {
 
     private boolean isSurrender;
     private String email;
