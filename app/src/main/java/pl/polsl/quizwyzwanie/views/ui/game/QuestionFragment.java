@@ -132,6 +132,14 @@ public class QuestionFragment extends Fragment {
         countDownTimer.start();
     }
 
+    @Override
+    public void onPause() {
+        resetTimer();
+        //todo: send info to database about wrong answers for the rest of questions
+        navigateToMenu();
+        super.onPause();
+    }
+
     private void goToNextQuestion() {
         if (!isAnswerSelected) {
             //todo send info about wrong answer to database - time is up
@@ -144,10 +152,14 @@ public class QuestionFragment extends Fragment {
         checkAnswer(answer);
         if (countDownTimer == null) goToNextQuestion();
         else {
-            countDownTimer.onFinish();
-            countDownTimer.cancel();
-            countDownTimer = null;
+            resetTimer();
         }
+    }
+
+    private void resetTimer() {
+        countDownTimer.onFinish();
+        countDownTimer.cancel();
+        countDownTimer = null;
     }
 
     private void checkAnswer(Answer answer) {
