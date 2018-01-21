@@ -91,6 +91,7 @@ public class CategoryFragment extends Fragment {
     }
 
     private void setupView() {
+        ((MainActivity)getActivity()).showDialog();
         //TODO: extract this to separated thread and refactor
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -115,6 +116,7 @@ public class CategoryFragment extends Fragment {
                 firstBtn.setText(threeRandomCategoriesList.get(0).getName());
                 secondBtn.setText(threeRandomCategoriesList.get(1).getName());
                 thirdBtn.setText(threeRandomCategoriesList.get(2).getName());
+                ((MainActivity)getActivity()).dismissDialog();
             }
 
             @Override

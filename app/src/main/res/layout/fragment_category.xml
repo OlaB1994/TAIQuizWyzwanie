@@ -28,7 +28,6 @@
                 android:layout_width="@dimen/fragment_category_button_size"
                 android:id="@+id/fragment_category_first_btn"
                 android:layout_margin="@dimen/normal_margin"
-                android:text="@string/fragment_category_name_placeholder"
                 android:background="@drawable/button_bg"
                 android:layout_height="@dimen/fragment_category_button_size" />
 
@@ -36,7 +35,6 @@
                 android:layout_width="@dimen/fragment_category_button_size"
                 android:id="@+id/fragment_category_second_btn"
                 android:layout_margin="@dimen/normal_margin"
-                android:text="@string/fragment_category_name_placeholder"
                 android:background="@drawable/button_bg"
                 android:layout_height="@dimen/fragment_category_button_size" />
         </LinearLayout>
@@ -46,7 +44,6 @@
             android:id="@+id/fragment_category_third_btn"
             android:layout_margin="@dimen/normal_margin"
             android:background="@drawable/button_bg"
-            android:text="@string/fragment_category_name_placeholder"
             android:layout_height="@dimen/fragment_category_button_size" />
     </LinearLayout>
 
