@@ -56,8 +56,12 @@ public class GameFragment extends Fragment {
     @OnClick(R.id.fragment_game_play_btn)
     public void onPlayClick(){
         if (game.getCurrentPlayer(user.getEmail()).getMyTurn()) {
-            ((MainActivity) getActivity()).switchToFragment(new CategoryFragment(),
-                    CategoryFragment.class.getName());
+            Bundle arguments = new Bundle();
+            arguments.putSerializable("user", user);
+            arguments.putSerializable("game", game);
+            CategoryFragment categoryFragment = new CategoryFragment();
+            categoryFragment.setArguments(arguments);
+            ((MainActivity) getActivity()).switchToFragment(categoryFragment, CategoryFragment.class.getName());
         } else Toast.makeText(getContext(), getString(R.string.waiting_for_opponent), Toast.LENGTH_LONG).show();
 
     }
