@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,10 +44,11 @@ public class MenuFragment extends Fragment {
     String username = "";
     String email = "";
     private List<Game> gamesList = new ArrayList<>();
+    private List<AppUser> opponentList = new ArrayList<>();
     private GamesAdapter adapter;
     private Bundle bundle;
-    private AppUser currentUser;
     private boolean isButtonActive = false;
+    private AppUser currentUser = null;
 
     @OnClick(R.id.fragment_menu_new_game_btn)
     public void onNewGameClick() {
@@ -58,19 +60,25 @@ public class MenuFragment extends Fragment {
     }
 
     private void startNewGame() {
-        //todo tutaj trzeba stworzyć nową grę i pusha zrobić do bazy, potem te dane wcisnąć do bundla
-        Game game = new Game(null, null, null, false,
-                new Player(false, "email", false, username, null, true, 0),
-                new Player(false, "email", false, "oponentName", null, true, 0),
-                username, "none");
-        //todo ten game wyżej uzupełnić poprawnymi danymi.
+        AppUser opponent = opponentList.get(new Random().nextInt(opponentList.size()));
+        Boolean myTurn = new Random().nextBoolean();
+
+        Game newGame = new Game(null, null, null, false,
+                new Player(false, currentUser.getEmail(), false, currentUser.getDisplayName(),
+                        null, myTurn,0),
+                new Player(false, opponent.getEmail(), false, opponent.getDisplayName(),
+                        null, !myTurn, 0),
+                null, "none");
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("games");
+        DatabaseReference newGameRef = ref.push();
+        newGame.setId(newGameRef.getKey());
+        newGameRef.setValue(newGame);
 
         GameFragment gameFragment = new GameFragment();
         Bundle arguments = new Bundle();
         arguments.putSerializable("user", currentUser);
-        arguments.putSerializable("game", game);
+        arguments.putSerializable("game", newGame);
 
         gameFragment.setArguments(arguments);
         ((MainActivity) getActivity()).switchToFragmentWithBackStack(gameFragment,
@@ -117,14 +125,13 @@ public class MenuFragment extends Fragment {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         AppUser user = snapshot.getValue(AppUser.class);
-                        Log.e("getData", email);
                         if (user.getEmail().equals(email)) {
                             currentUser = user;
-                            new GetData().execute();
-                            return;
+                        } else {
+                            opponentList.add(user);
                         }
                     }
-                    currentUser = createUser();
+                    if (currentUser == null) currentUser = createUser();
                     new GetData().execute();
                 }
 
@@ -161,6 +168,7 @@ public class MenuFragment extends Fragment {
             gamesList = new ArrayList<>();
             gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
                     OrientationHelper.VERTICAL, false));
+            bundle.putSerializable("user", currentUser);
             adapter = new GamesAdapter((MainActivity) getActivity(), gamesList, bundle);
             gamesRv.setAdapter(adapter);
         }
@@ -176,12 +184,16 @@ public class MenuFragment extends Fragment {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Game game = snapshot.getValue(Game.class);
-                        if (game.getUser1().getEmail().equals(currentUser.getEmail())
-                                || game.getUser2().getEmail().equals(currentUser.getEmail())) {
+                        if(game.getUser1().getEmail().equals(currentUser.getEmail())){
+                            game.setCurrentUser(Game.CurrentUser.USER_1);
+                            gamesList.add(game);
+                        }
+                        if (game.getUser2().getEmail().equals(currentUser.getEmail())){
+                            game.setCurrentUser(Game.CurrentUser.USER_2);
                             gamesList.add(game);
                         }
 
-                        Log.d("TMP", game.getOpponentUsername());
+                        Log.d("TMP", game.getOpponentUsername(currentUser));
                     }
                     Collections.sort(gamesList);
                     isButtonActive = true;
@@ -200,7 +212,7 @@ public class MenuFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Game> gamesList) {
-            ((MainActivity) getActivity()).dismissDialog();
+            ((MainActivity)getActivity()).dismissDialog();
         }
     }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.views.domain.model.Game;
 import pl.polsl.quizwyzwanie.views.domain.model.RoundResult;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 
@@ -25,10 +26,12 @@ public class RoundsAdapter extends RecyclerView.Adapter<RoundsAdapter.ViewHolder
 
     private List<RoundResult> rounds;
     private MainActivity activity;
+    private Game game;
 
-    public RoundsAdapter(MainActivity activity, List<RoundResult> rounds) {
+    public RoundsAdapter(MainActivity activity, List<RoundResult> rounds, Game game) {
         this.activity = activity;
         this.rounds = rounds;
+        this.game = game;
     }
 
     @Override

@@ -16,6 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.views.domain.model.AppUser;
 import pl.polsl.quizwyzwanie.views.domain.model.Game;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 import pl.polsl.quizwyzwanie.views.ui.game.GameFragment;
@@ -25,11 +26,13 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
     private List<Game> games;
     private MainActivity activity;
     private Bundle bundleData;
+    private AppUser user;
 
     public GamesAdapter(MainActivity activity, List<Game> games, Bundle bundleData) {
         this.activity = activity;
         this.games = games;
         this.bundleData = bundleData;
+        user = (AppUser)bundleData.getSerializable("user");
     }
 
     @Override
@@ -45,24 +48,23 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
         holder.mainLl.setOnClickListener(v -> {
             GameFragment gameFragment;
             Bundle arguments = bundleData;
-            if (games.get(position).getState() == Game.STATE_YOUR_TURN) {
-                gameFragment = new GameFragment();
-                arguments.putSerializable("game", games.get(position));
-                gameFragment.setArguments(arguments);
-                activity.switchToFragmentWithBackStack(gameFragment,
-                        GameFragment.class.getName(), MenuFragment.class.getName());
-            }
+            gameFragment = new GameFragment();
+            arguments.putSerializable("game", games.get(position));
+
+            gameFragment.setArguments(arguments);
+            activity.switchToFragmentWithBackStack(gameFragment,
+                    GameFragment.class.getName(), MenuFragment.class.getName());
         });
     }
 
     @SuppressLint("StringFormatInvalid")
     private void setText(Game game, TextView textTv) {
         if (game.getState() == Game.STATE_WAITING)
-            textTv.setText(activity.getString(R.string.entry_games_state_waiting, game.getOpponentUsername()));
+            textTv.setText(activity.getString(R.string.entry_games_state_waiting, game.getOpponentUsername(user)));
         else if (game.getState() == Game.STATE_FINISHED)
-            textTv.setText(activity.getString(R.string.entry_games_state_finished, game.getOpponentUsername()));
+            textTv.setText(activity.getString(R.string.entry_games_state_finished, game.getOpponentUsername(user)));
         else if (game.getState() == Game.STATE_YOUR_TURN)
-            textTv.setText(activity.getString(R.string.entry_games_state_your_turn, game.getOpponentUsername()));
+            textTv.setText(activity.getString(R.string.entry_games_state_your_turn, game.getOpponentUsername(user)));
     }
 
     private void setIcon(Game game, ImageView iconIv) {

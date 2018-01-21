@@ -2,6 +2,8 @@ package pl.polsl.quizwyzwanie.views.domain.model;
 
 import android.support.annotation.NonNull;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,11 +19,9 @@ public class Game implements Comparable<Game>, Serializable {
     public static final int ANSWER_WRONG = 2;
     public static final int ANSWER_DO_NOT_SHOW = 3;
     public static int[] DEFAULT_ANSWER = new int[]{ANSWER_UNDEFINED, ANSWER_UNDEFINED, ANSWER_UNDEFINED};
-//
-//    private String opponentUsername;
-//    private int myPoints;
-//    private int opponentPoints;
-//    private int state;
+
+    public enum CurrentUser {USER_1, USER_2};
+    private CurrentUser currentUser;
 
 
     private String actualCategoryName;
@@ -32,6 +32,8 @@ public class Game implements Comparable<Game>, Serializable {
     private Player user2;
     private String whoChoosedCategoryLast;
     private String whoWinGame;
+
+
 
     public Game() {    }
 
@@ -78,26 +80,44 @@ public class Game implements Comparable<Game>, Serializable {
         return whoWinGame;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setCurrentUser(CurrentUser currentUser){
+        this.currentUser = currentUser;
+    }
+
+    @Exclude
     public Integer getState(){
         if (this.isFinished) return STATE_FINISHED;
-        else if (this.user1.getMyTurn()) return STATE_YOUR_TURN;
+        else if ((currentUser.equals(CurrentUser.USER_1) && user1.getMyTurn())
+            || (currentUser.equals(CurrentUser.USER_2) && user2.getMyTurn()))
+            return STATE_YOUR_TURN;
         else return STATE_WAITING;
     }
 
-    public String getOpponentUsername(){
-        if (user2.getDisplayName() != null ) {
-            if (!user2.getDisplayName().equals("")) return user2.getDisplayName();
-            else return user2.getEmail();
-        }
-        else return user2.getEmail();
+    public Player getCurrentPlayer(String email){
+        if (user1.getEmail().equals(email)) return user1;
+        else return user2;
     }
 
-//    public Game(String opponentUsername, int myPoints, int opponentPoints, int state) {
-//        this.opponentUsername = opponentUsername;
-//        this.myPoints = myPoints;
-//        this.opponentPoints = opponentPoints;
-//        this.state = state;
-//    }
+    public String getOpponentUsername(AppUser loggedUser){
+
+        if(user1.getEmail().equals(loggedUser.getEmail())) {
+            if (user2.getDisplayName() != null ) {
+                if (!user2.getDisplayName().equals("")) return user2.getDisplayName();
+                else return user2.getEmail();
+            }
+            else return user2.getEmail();
+        } else {
+            if (user1.getDisplayName() != null ) {
+                if (!user1.getDisplayName().equals("")) return user1.getDisplayName();
+                else return user1.getEmail();
+            }
+            else return user1.getEmail();
+        }
+    }
 
     @Override
     public int compareTo(@NonNull Game o) {
@@ -105,12 +125,5 @@ public class Game implements Comparable<Game>, Serializable {
         if (this.getState() > o.getState()) return -1;
         return 0;
     }
-//
-//    public int getState() {
-//        return state;
-//    }
-//
-//    public String getOpponentUsername() {
-//        return opponentUsername;
-//    }
+
 }
