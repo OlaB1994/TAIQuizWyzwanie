@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,18 +40,30 @@ public class GameFragment extends Fragment {
     @BindView(R.id.fragment_game_round_results_rv)
     RecyclerView resultsRv;
 
+    @BindView(R.id.fragment_game_surrender_btn)
+    Button surrenderBtn;
+    @BindView(R.id.fragment_game_play_btn)
+    Button playBtn;
+
     Game game;
     private AppUser user;
 
     @OnClick(R.id.fragment_game_surrender_btn)
     public void onSurrenderClick(){
-
+        //TODO: obsługa działania gry po kliknięciu przycisku surrender. Przemyśleć logikę. Na pewno do ustawienia isSurrender na Player oraz na Game isFinished
     }
 
     @OnClick(R.id.fragment_game_play_btn)
     public void onPlayClick(){
-        ((MainActivity)getActivity()).switchToFragment(new CategoryFragment(),
-                CategoryFragment.class.getName());
+        if (game.getCurrentPlayer(user.getEmail()).getMyTurn()) {
+            Bundle arguments = new Bundle();
+            arguments.putSerializable("user", user);
+            arguments.putSerializable("game", game);
+            CategoryFragment categoryFragment = new CategoryFragment();
+            categoryFragment.setArguments(arguments);
+            ((MainActivity) getActivity()).switchToFragment(categoryFragment, CategoryFragment.class.getName());
+        } else Toast.makeText(getContext(), getString(R.string.waiting_for_opponent), Toast.LENGTH_LONG).show();
+
     }
 
     @Override
@@ -64,19 +78,23 @@ public class GameFragment extends Fragment {
 
 
     private void setupView() {
-        //todo: setup usernames and results
         myUsernameTv.setText(user.getDisplayName());
-        opponentUsernameTv.setText(game.getOpponentUsername());
+        opponentUsernameTv.setText(game.getOpponentUsername(user));
+
+        if (game.isFinished()) {
+            surrenderBtn.setVisibility(View.GONE);
+            playBtn.setVisibility(View.GONE);
+        }
 
         resultsRv.setLayoutManager(new LinearLayoutManager(getContext(),
                 OrientationHelper.VERTICAL, false));
-        resultsRv.setAdapter(new RoundsAdapter((MainActivity) getActivity(), mockRounds()));
+        resultsRv.setAdapter(new RoundsAdapter((MainActivity) getActivity(), mockRounds(), game));
     }
 
     private void setupGame() {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            user = (AppUser) bundle.getSerializable("user");
+            user = (AppUser)bundle.getSerializable("user");
             game = (Game)bundle.getSerializable("game");
         }
     }
