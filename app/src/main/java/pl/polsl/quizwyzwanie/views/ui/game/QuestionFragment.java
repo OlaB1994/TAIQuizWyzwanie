@@ -32,6 +32,7 @@ public class QuestionFragment extends Fragment {
     private static final int ANSWER_CORRECT = 1;
 
     private int questionCounter;
+    private boolean[] questionAnswers = new boolean[4];
 
     int counter = 5;
     String currentCategory;
@@ -102,6 +103,11 @@ public class QuestionFragment extends Fragment {
             answerBBtn.setText(question.getAnswers().get(1).getTresc());
             answerCBtn.setText(question.getAnswers().get(2).getTresc());
             answerDBtn.setText(question.getAnswers().get(3).getTresc());
+
+            questionAnswers[0] = question.getAnswers().get(0).isCorrect();
+            questionAnswers[1] = question.getAnswers().get(2).isCorrect();
+            questionAnswers[2] = question.getAnswers().get(2).isCorrect();
+            questionAnswers[3] = question.getAnswers().get(3).isCorrect();
         }
 
         setupTimer();
@@ -157,25 +163,31 @@ public class QuestionFragment extends Fragment {
 
     private void setupAnswerIndicator(int answer) {
         if (questionCounter == 1) {
+            Log.d("setupAnswerIndicator", "First question answered!");
             setupAnswerColor(firstIndicatorIv, answer);
         } else if (questionCounter == 2) {
+            Log.d("setupAnswerIndicator", "Second question answered!");
             setupAnswerColor(secondIndicatorIv, answer);
         } else if (questionCounter == 3) {
+            Log.d("setupAnswerIndicator", "Third question answered!");
             setupAnswerColor(thirdIndicatorIv, answer);
         }
     }
 
     private void setupAnswerColor(ImageView imageView, int answer) {
         if (answer == ANSWER_CORRECT) {
+            Log.d("setupAnswerColor", "Answer is correct: green color is set");
             imageView.setColorFilter(getContext().getResources().getColor(R.color.question_correct));
         } else if (answer == ANSWER_WRONG) {
+            Log.d("setupAnswerColor", "Answer is wrong: red color is set");
             imageView.setColorFilter(getContext().getResources().getColor(R.color.question_wrong));
         }
     }
 
     private boolean validateAnswer(Answer answer) {
         Log.d("validateAnswer", "Checking if answer is valid!");
-        return true;
+        int whichAnswer = answer.ordinal();
+        return questionAnswers[whichAnswer];
     }
 
 
