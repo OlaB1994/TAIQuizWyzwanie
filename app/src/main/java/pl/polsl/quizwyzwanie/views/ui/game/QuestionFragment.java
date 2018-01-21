@@ -82,7 +82,7 @@ public class QuestionFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, view);
         prepareAndShowNextQuestion();
-
+        setupTimer();
         return view;
     }
 
@@ -94,8 +94,6 @@ public class QuestionFragment extends Fragment {
             question = (Question) bundle.getSerializable("question" + questionCounter);
         }
 
-        timerPb.setMax(MAX_TIME_IN_MILIS);
-
         if (question != null) {
             questionTv.setText(question.getTresc());
             answerABtn.setText(question.getAnswers().get(0).getTresc());
@@ -104,7 +102,6 @@ public class QuestionFragment extends Fragment {
             answerDBtn.setText(question.getAnswers().get(3).getTresc());
         }
 
-        setupTimer();
     }
 
     @Override
@@ -120,7 +117,6 @@ public class QuestionFragment extends Fragment {
             @Override
             public void onTick(long millisUntilFinished) {
                 counter--;
-
                 timerPb.setProgress((int) millisUntilFinished);
             }
 
