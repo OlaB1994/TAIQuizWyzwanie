@@ -124,7 +124,7 @@ public class QuestionFragment extends Fragment {
             answerDBtn.setText(question.getAnswers().get(3).getTresc());
 
             questionAnswers[0] = question.getAnswers().get(0).isIsCorrect();
-            questionAnswers[1] = question.getAnswers().get(2).isIsCorrect();
+            questionAnswers[1] = question.getAnswers().get(1).isIsCorrect();
             questionAnswers[2] = question.getAnswers().get(2).isIsCorrect();
             questionAnswers[3] = question.getAnswers().get(3).isIsCorrect();
         }
