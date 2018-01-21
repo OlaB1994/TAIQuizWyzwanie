@@ -45,6 +45,10 @@ public class Game implements Comparable<Game>, Serializable {
         return actualCategoryName;
     }
 
+    public void setActualCategoryName(String actualCategoryName) {
+        this.actualCategoryName = actualCategoryName;
+    }
+
     public List<CategoryRounds> getCategoryRounds() {
         return categoryRounds;
     }
@@ -79,6 +83,10 @@ public class Game implements Comparable<Game>, Serializable {
 
     public void setCurrentUser(CurrentUser currentUser){
         this.currentUser = currentUser;
+    }
+
+    public CurrentUser getCurrentUser() {
+        return currentUser;
     }
 
     @Exclude

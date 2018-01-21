@@ -49,6 +49,10 @@ public class Player implements Serializable {
         return stateOfLastThreeAnswers;
     }
 
+    public void setStateOfLastThreeAnswers(List<StateOfLastThreeAnswers> stateOfLastThreeAnswers) {
+        this.stateOfLastThreeAnswers = stateOfLastThreeAnswers;
+    }
+
     public Boolean getMyTurn() {
         return myTurn;
     }

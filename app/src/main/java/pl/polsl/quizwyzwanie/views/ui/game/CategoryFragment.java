@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.views.domain.model.Category;
+import pl.polsl.quizwyzwanie.views.domain.model.Game;
 import pl.polsl.quizwyzwanie.views.domain.model.Question;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 
@@ -85,6 +86,17 @@ public class CategoryFragment extends Fragment {
         arguments.putSerializable("question1", questions.get(1));
         arguments.putSerializable("question2", questions.get(2));
         arguments.putString("category", category);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            Game game = (Game) bundle.getSerializable("game");
+            game.setActualCategoryName(category);
+
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+            rootRef.child("games").child(game.getId()).setValue(game);
+
+            arguments.putSerializable("game", game);
+        }
 
         questionFragment.setArguments(arguments);
         return questionFragment;

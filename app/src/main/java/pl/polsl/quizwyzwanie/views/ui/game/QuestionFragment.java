@@ -13,11 +13,19 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.views.domain.model.Game;
 import pl.polsl.quizwyzwanie.views.domain.model.Question;
+import pl.polsl.quizwyzwanie.views.domain.model.StateOfLastThreeAnswers;
 
 public class QuestionFragment extends Fragment {
 
@@ -169,12 +177,37 @@ public class QuestionFragment extends Fragment {
 
     private void checkAnswer(Answer answer) {
         isAnswerSelected = true;
-        if (validateAnswer(answer)) {
+        boolean isAnswerCorrect = validateAnswer(answer);
+        if (isAnswerCorrect) {
             //TODO: handle correct answer
             handleCorrectAnswer();
         } else {
             //TODO: handle invalid answer
             handleInvalidAnswer();
+        }
+
+        //set stateOfLastThreeAnswers list in Firebase
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            Game game = (Game) bundle.getSerializable("game");
+
+            //TODO: choose correct user instead of user1 always
+            List<StateOfLastThreeAnswers> stateOfLastThreeAnswers = new ArrayList<>();
+            if (game.getUser1().getStateOfLastThreeAnswers() != null) {
+                stateOfLastThreeAnswers = game.getUser1().getStateOfLastThreeAnswers();
+            }
+
+            final int CORRECT_ANSWER_IN_STATEOFLASTTHREEANSWERS_FIELD = 1;
+            final int WRONG_ANSWER_IN_STATEOFLASTTHREEANSWERS_FIELD = -1;
+            if (isAnswerCorrect) {
+                stateOfLastThreeAnswers.add(new StateOfLastThreeAnswers(CORRECT_ANSWER_IN_STATEOFLASTTHREEANSWERS_FIELD));
+            } else {
+                stateOfLastThreeAnswers.add(new StateOfLastThreeAnswers(WRONG_ANSWER_IN_STATEOFLASTTHREEANSWERS_FIELD));
+            }
+            game.getUser1().setStateOfLastThreeAnswers(stateOfLastThreeAnswers);
+
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+            rootRef.child("games").child(game.getId()).setValue(game);
         }
     }
 
