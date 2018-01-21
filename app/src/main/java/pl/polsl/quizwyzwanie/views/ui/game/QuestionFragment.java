@@ -33,6 +33,7 @@ public class QuestionFragment extends Fragment {
     private static final int ANSWER_CORRECT = 1;
 
     private int questionCounter;
+    private boolean isAnswerSelected = false;
     private boolean[] questionAnswers = new boolean[4];
 
     int counter = 5;
@@ -125,31 +126,71 @@ public class QuestionFragment extends Fragment {
             public void onFinish() {
                 counter--;
                 timerPb.setProgress(0);
+                goToNextQuestion();
             }
         };
         countDownTimer.start();
     }
 
+    @Override
+    public void onPause() {
+        resetTimer();
+        //todo: send info to database about wrong answers for the rest of questions
+        navigateToMenu();
+        super.onPause();
+    }
+
+    private void goToNextQuestion() {
+        if (!isAnswerSelected) {
+            //todo send info about wrong answer to database - time is up
+            handleInvalidAnswer();
+        }
+        handleNextQuestion();
+    }
+
     private void handleAnswer(Answer answer) {
+        checkAnswer(answer);
+        if (countDownTimer == null) goToNextQuestion();
+        else {
+            resetTimer();
+        }
+    }
+
+    private void resetTimer() {
         countDownTimer.onFinish();
         countDownTimer.cancel();
         countDownTimer = null;
-        questionCounter++;
+    }
+
+    private void checkAnswer(Answer answer) {
+        isAnswerSelected = true;
         if (validateAnswer(answer)) {
             //TODO: handle correct answer
-            Log.d("handleAnswer", "Answer correct!");
-            setupAnswerIndicator(ANSWER_CORRECT);
-            prepareAndShowNextQuestion();
+            handleCorrectAnswer();
         } else {
             //TODO: handle invalid answer
-            Log.d("handleAnswer", "Answer invalid!");
-            setupAnswerIndicator(ANSWER_WRONG);
-            prepareAndShowNextQuestion();
+            handleInvalidAnswer();
         }
+    }
 
+    private void handleCorrectAnswer() {
+        Log.d("handleAnswer", "Answer correct!");
+        setupAnswerIndicator(ANSWER_CORRECT);
+    }
+
+    private void handleInvalidAnswer() {
+        Log.d("handleAnswer", "Answer invalid!");
+        setupAnswerIndicator(ANSWER_WRONG);
+    }
+
+    private void handleNextQuestion() {
+        questionCounter++;
+        isAnswerSelected = false;
         if (questionCounter >= QUESTIONS_LIMIT) {
             Log.d("handleAnswer", "Question limit reached!");
             navigateToMenu();
+        } else {
+            prepareAndShowNextQuestion();
         }
     }
 
