@@ -123,10 +123,10 @@ public class QuestionFragment extends Fragment {
             answerCBtn.setText(question.getAnswers().get(2).getTresc());
             answerDBtn.setText(question.getAnswers().get(3).getTresc());
 
-            questionAnswers[0] = question.getAnswers().get(0).isCorrect();
-            questionAnswers[1] = question.getAnswers().get(2).isCorrect();
-            questionAnswers[2] = question.getAnswers().get(2).isCorrect();
-            questionAnswers[3] = question.getAnswers().get(3).isCorrect();
+            questionAnswers[0] = question.getAnswers().get(0).isIsCorrect();
+            questionAnswers[1] = question.getAnswers().get(2).isIsCorrect();
+            questionAnswers[2] = question.getAnswers().get(2).isIsCorrect();
+            questionAnswers[3] = question.getAnswers().get(3).isIsCorrect();
         }
         setupTimer();
     }

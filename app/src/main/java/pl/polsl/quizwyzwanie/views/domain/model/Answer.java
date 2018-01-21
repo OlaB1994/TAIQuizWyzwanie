@@ -15,11 +15,11 @@ public class Answer implements Serializable {
         this.tresc = tresc;
     }
 
-    public boolean isCorrect() {
+    public boolean isIsCorrect() {
         return isCorrect;
     }
-    public void setCorrect(boolean correct) {
-        isCorrect = correct;
+    public void setIsCorrect(boolean isCorrect) {
+        this.isCorrect = isCorrect;
     }
 
     public String getTresc() {
