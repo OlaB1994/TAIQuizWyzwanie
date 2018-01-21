@@ -13,13 +13,6 @@ public class Game implements Comparable<Game>, Serializable {
     public static final int STATE_WAITING = 1;
     public static final int STATE_YOUR_TURN = 2;
 
-    public static final int ROUND_PER_GAME = 6;
-    public static final int ANSWER_UNDEFINED = 0;
-    public static final int ANSWER_CORRECT = 1;
-    public static final int ANSWER_WRONG = 2;
-    public static final int ANSWER_DO_NOT_SHOW = 3;
-    public static int[] DEFAULT_ANSWER = new int[]{ANSWER_UNDEFINED, ANSWER_UNDEFINED, ANSWER_UNDEFINED};
-
     public enum CurrentUser {USER_1, USER_2};
     private CurrentUser currentUser;
 
@@ -102,8 +95,15 @@ public class Game implements Comparable<Game>, Serializable {
         else return user2;
     }
 
-    public String getOpponentUsername(AppUser loggedUser){
+    public Player getOpponent(AppUser currentPlayer){
+        if(user1.getEmail().equals(currentPlayer.getEmail())) {
+            return user2;
+        } else {
+            return user1;
+        }
+    }
 
+    public String getOpponentUsername(AppUser loggedUser){
         if(user1.getEmail().equals(loggedUser.getEmail())) {
             if (user2.getDisplayName() != null ) {
                 if (!user2.getDisplayName().equals("")) return user2.getDisplayName();
@@ -117,6 +117,10 @@ public class Game implements Comparable<Game>, Serializable {
             }
             else return user1.getEmail();
         }
+    }
+
+    public CurrentUser getCurrentDBUser(){
+        return currentUser;
     }
 
     @Override
