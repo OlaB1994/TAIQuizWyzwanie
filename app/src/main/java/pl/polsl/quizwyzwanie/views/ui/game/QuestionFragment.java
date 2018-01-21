@@ -23,6 +23,7 @@ public class QuestionFragment extends Fragment {
 
     private static final int QUESTIONS_LIMIT = 3;
     public static final int MAX_TIME_IN_MILIS = 5000;
+    public static final String TAG = "QF";
     private CountDownTimer countDownTimer;
 
     private enum Answer {
@@ -124,7 +125,7 @@ public class QuestionFragment extends Fragment {
             answerDBtn.setText(question.getAnswers().get(3).getTresc());
 
             questionAnswers[0] = question.getAnswers().get(0).isIsCorrect();
-            questionAnswers[1] = question.getAnswers().get(2).isIsCorrect();
+            questionAnswers[1] = question.getAnswers().get(1).isIsCorrect();
             questionAnswers[2] = question.getAnswers().get(2).isIsCorrect();
             questionAnswers[3] = question.getAnswers().get(3).isIsCorrect();
         }
@@ -230,6 +231,7 @@ public class QuestionFragment extends Fragment {
 
     private void navigateToMenu() {
         Log.d("navigateToMenu", "Moving back to menu!");
+        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
