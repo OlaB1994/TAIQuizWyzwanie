@@ -3,10 +3,6 @@ package pl.polsl.quizwyzwanie.domain.model;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Mateusz on 19.01.2018.
- */
-
 public class CategoryRounds implements Serializable {
 
     private String categoryName;

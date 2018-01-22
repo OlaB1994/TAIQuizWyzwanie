@@ -20,7 +20,7 @@ public class AppUser implements Serializable {
     }
 
     public AppUser(String username, String email) {
-        this.wins = Long.valueOf(0);
+        this.wins = 0L;
         this.email = email;
         this.displayName = username;
     }

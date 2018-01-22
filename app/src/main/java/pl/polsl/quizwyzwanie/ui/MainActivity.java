@@ -161,16 +161,13 @@ public class MainActivity extends AppCompatActivity implements
         Log.d(TAG, "firebaseAuthWithGooogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            signInError();
-                        }
-                        // now menu can be displayed
-                        getUserDataFromAuth();
-                        addFragment();
+                .addOnCompleteListener(this, task -> {
+                    if (!task.isSuccessful()) {
+                        signInError();
                     }
+                    // now menu can be displayed
+                    getUserDataFromAuth();
+                    addFragment();
                 });
     }
 

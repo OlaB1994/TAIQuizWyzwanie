@@ -40,8 +40,10 @@ public class MenuFragment extends Fragment {
 
 
     @BindView(R.id.fragment_menu_username_tv)
+    private
     TextView usernameTv;
     @BindView(R.id.fragment_menu_games_rv)
+    private
     RecyclerView gamesRv;
 
     private String username = "";

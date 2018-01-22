@@ -40,22 +40,31 @@ public class QuestionFragment extends Fragment {
     private final boolean[] questionAnswers = new boolean[4];
 
     @BindView(R.id.fragment_question_first_indicator_iv)
+    private
     ImageView firstIndicatorIv;
     @BindView(R.id.fragment_question_second_indicator_iv)
+    private
     ImageView secondIndicatorIv;
     @BindView(R.id.fragment_question_third_indicator_iv)
+    private
     ImageView thirdIndicatorIv;
     @BindView(R.id.fragment_question_question_tv)
+    private
     TextView questionTv;
     @BindView(R.id.fragment_question_answer_a_btn)
+    private
     Button answerABtn;
     @BindView(R.id.fragment_question_answer_b_btn)
+    private
     Button answerBBtn;
     @BindView(R.id.fragment_question_answer_c_btn)
+    private
     Button answerCBtn;
     @BindView(R.id.fragment_question_answer_d_btn)
+    private
     Button answerDBtn;
     @BindView(R.id.fragment_question_timer_pb)
+    private
     ProgressBar timerPb;
 
     private CountDownTimer countDownTimer;

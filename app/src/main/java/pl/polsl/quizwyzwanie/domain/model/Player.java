@@ -5,10 +5,6 @@ import com.google.firebase.database.PropertyName;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by Mateusz on 17.01.2018.
- */
-
 public class Player implements Serializable {
 
     private boolean isSurrender;
