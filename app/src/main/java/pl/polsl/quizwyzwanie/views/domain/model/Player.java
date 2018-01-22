@@ -1,5 +1,7 @@
 package pl.polsl.quizwyzwanie.views.domain.model;
 
+import com.google.firebase.database.PropertyName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,7 +31,8 @@ public class Player implements Serializable {
         this.points = points;
     }
 
-    public Boolean getSurrender() {
+    @PropertyName("isSurrender")
+    public Boolean isSurrender() {
         return isSurrender;
     }
 
@@ -37,7 +40,8 @@ public class Player implements Serializable {
         return email;
     }
 
-    public Boolean getFinished() {
+    @PropertyName("isFinished")
+    public Boolean isFinished() {
         return isFinished;
     }
 

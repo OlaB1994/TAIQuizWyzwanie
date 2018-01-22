@@ -3,6 +3,7 @@ package pl.polsl.quizwyzwanie.views.domain.model;
 import android.support.annotation.NonNull;
 
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.PropertyName;
 
 import java.io.Serializable;
 import java.util.List;
@@ -57,6 +58,7 @@ public class Game implements Comparable<Game>, Serializable {
         return id;
     }
 
+    @PropertyName("isFinished")
     public boolean isFinished() {
         return isFinished;
     }
