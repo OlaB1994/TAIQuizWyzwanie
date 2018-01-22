@@ -20,12 +20,12 @@ public class RoundResult {
         this.opponentQuestionsResults = opponentQuestionsResults;
     }
 
-    @SuppressWarnings("unused")
+
     public RoundResult() {
         categoryName = "TEST";
     }
 
-    @SuppressWarnings("unused")
+
     public String getCategoryName() {
         return categoryName;
     }

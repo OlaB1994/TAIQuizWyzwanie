@@ -36,15 +36,14 @@ import pl.polsl.quizwyzwanie.ui.game.GameFragment;
 
 public class MenuFragment extends Fragment {
 
+    private final List<AppUser> opponentList = new ArrayList<>();
     @BindView(R.id.fragment_menu_username_tv)
     TextView usernameTv;
     @BindView(R.id.fragment_menu_games_rv)
     RecyclerView gamesRv;
-
     private String username = "";
     private String email = "";
     private List<Game> gamesList = new ArrayList<>();
-    private final List<AppUser> opponentList = new ArrayList<>();
     private GamesAdapter adapter;
     private Bundle bundle;
     private boolean isButtonActive = false;
@@ -109,6 +108,15 @@ public class MenuFragment extends Fragment {
         new GetUser().execute();
     }
 
+    private AppUser createUser() {
+        AppUser newUser = new AppUser(username, email);
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userRef = rootRef.child("users");
+        DatabaseReference newUserRef = userRef.push();
+        newUser.setId(newUserRef.getKey());
+        newUserRef.setValue(newUser);
+        return newUser;
+    }
 
     private class GetUser extends AsyncTask<Void, Void, AppUser> {
 
@@ -148,16 +156,6 @@ public class MenuFragment extends Fragment {
         @Override
         protected void onPostExecute(AppUser user) {
         }
-    }
-
-    private AppUser createUser() {
-        AppUser newUser = new AppUser(username, email);
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference userRef = rootRef.child("users");
-        DatabaseReference newUserRef = userRef.push();
-        newUser.setId(newUserRef.getKey());
-        newUserRef.setValue(newUser);
-        return newUser;
     }
 
     private class GetData extends AsyncTask<Void, Void, List<Game>> {

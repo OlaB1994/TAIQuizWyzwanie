@@ -32,28 +32,13 @@ import pl.polsl.quizwyzwanie.domain.model.StateOfLastThreeAnswers;
 
 public class QuestionFragment extends Fragment {
 
+
+    public static final String TAG = "QF";
     private static final int QUESTIONS_LIMIT = 3;
     private static final int MAX_TIME_IN_MILIS = 5000;
-    @SuppressWarnings("unused")
-    public static final String TAG = "QF";
-    private CountDownTimer countDownTimer;
-
-    private enum Answer {
-        A, B, C, D
-    }
-
     private static final int ANSWER_WRONG = 0;
     private static final int ANSWER_CORRECT = 1;
-
-    private int questionCounter;
-    private boolean isAnswerSelected = false;
     private final boolean[] questionAnswers = new boolean[4];
-
-    private int counter = 5;
-    @SuppressWarnings("unused")
-    private String currentCategory;
-    private Long currentQuestionId;
-
     @BindView(R.id.fragment_question_first_indicator_iv)
     ImageView firstIndicatorIv;
     @BindView(R.id.fragment_question_second_indicator_iv)
@@ -72,6 +57,13 @@ public class QuestionFragment extends Fragment {
     Button answerDBtn;
     @BindView(R.id.fragment_question_timer_pb)
     ProgressBar timerPb;
+    private CountDownTimer countDownTimer;
+    private int questionCounter;
+    private boolean isAnswerSelected = false;
+    private int counter = 5;
+
+    private String currentCategory;
+    private Long currentQuestionId;
 
     @OnClick(R.id.fragment_question_answer_a_btn)
     public void onAnswerAClick() {
@@ -178,7 +170,7 @@ public class QuestionFragment extends Fragment {
 
     private void resetTimer() {
         Log.i(this.getClass().getName(), "timer reset");
-        if(countDownTimer == null) return;
+        if (countDownTimer == null) return;
         countDownTimer.cancel();
         countDownTimer.onFinish();
     }
@@ -291,11 +283,15 @@ public class QuestionFragment extends Fragment {
         return questionAnswers[whichAnswer];
     }
 
-
     private void navigateToMenu() {
         Log.d("navigateToMenu", "Moving back to menu!");
         getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         getActivity().getSupportFragmentManager().popBackStack();
+    }
+
+
+    private enum Answer {
+        A, B, C, D
     }
 
 }

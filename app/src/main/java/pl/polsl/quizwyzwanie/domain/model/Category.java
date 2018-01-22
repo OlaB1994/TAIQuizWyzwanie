@@ -19,7 +19,8 @@ public class Category implements Serializable {
     public String getName() {
         return name;
     }
-    @SuppressWarnings("unused")
+
+
     public void setName(String name) {
         this.name = name;
     }
@@ -27,7 +28,8 @@ public class Category implements Serializable {
     public List<Question> getQuestions() {
         return questions;
     }
-    @SuppressWarnings("unused")
+
+
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }

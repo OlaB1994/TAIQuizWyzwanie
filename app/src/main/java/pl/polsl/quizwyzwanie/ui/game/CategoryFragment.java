@@ -23,21 +23,19 @@ import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.domain.model.Category;
 import pl.polsl.quizwyzwanie.domain.model.CategoryRounds;
-import pl.polsl.quizwyzwanie.domain.model.ChoosenQuestionId;
 import pl.polsl.quizwyzwanie.domain.model.Game;
 import pl.polsl.quizwyzwanie.domain.model.Question;
 import pl.polsl.quizwyzwanie.ui.MainActivity;
 
 public class CategoryFragment extends Fragment {
 
+    private final List<Category> categoriesList = new ArrayList<>();
     @BindView(R.id.fragment_category_first_btn)
     Button firstBtn;
     @BindView(R.id.fragment_category_second_btn)
     Button secondBtn;
     @BindView(R.id.fragment_category_third_btn)
     Button thirdBtn;
-
-    private final List<Category> categoriesList = new ArrayList<>();
     private List<Category> threeRandomCategoriesList = new ArrayList<>();
 
     private List<Question> questions = new ArrayList<>();
@@ -113,7 +111,7 @@ public class CategoryFragment extends Fragment {
     }
 
     private void setupView() {
-        ((MainActivity)getActivity()).showDialog();
+        ((MainActivity) getActivity()).showDialog();
         //TODO: extract this to separated thread and refactor
         DatabaseReference mDatabase;
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -138,7 +136,7 @@ public class CategoryFragment extends Fragment {
                 firstBtn.setText(threeRandomCategoriesList.get(0).getName());
                 secondBtn.setText(threeRandomCategoriesList.get(1).getName());
                 thirdBtn.setText(threeRandomCategoriesList.get(2).getName());
-                ((MainActivity)getActivity()).dismissDialog();
+                ((MainActivity) getActivity()).dismissDialog();
             }
 
             @Override

@@ -2,7 +2,7 @@ package pl.polsl.quizwyzwanie.domain.model;
 
 import java.io.Serializable;
 
-public class AppUser implements Serializable{
+public class AppUser implements Serializable {
 
     private String id;
     private String email;
@@ -25,39 +25,39 @@ public class AppUser implements Serializable{
         this.displayName = username;
     }
 
-    @SuppressWarnings("unused")
+
     public String getId() {
         return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    @SuppressWarnings("unused")
-    public Long getWins() {
-        return wins;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    @SuppressWarnings("unused")
+    public String getEmail() {
+        return email;
+    }
+
+
     public void setEmail(String email) {
         this.email = email;
     }
 
-    @SuppressWarnings("unused")
+    public String getDisplayName() {
+        return displayName;
+    }
+
+
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
-    @SuppressWarnings("unused")
+
+    public Long getWins() {
+        return wins;
+    }
+
+
     public void setWins(Long wins) {
         this.wins = wins;
     }

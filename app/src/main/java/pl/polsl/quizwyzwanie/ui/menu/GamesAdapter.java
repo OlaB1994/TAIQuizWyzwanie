@@ -32,7 +32,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
         this.activity = activity;
         this.games = games;
         this.bundleData = bundleData;
-        user = (AppUser)bundleData.getSerializable("user");
+        user = (AppUser) bundleData.getSerializable("user");
     }
 
     @Override

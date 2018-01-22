@@ -8,7 +8,7 @@ public class StateOfLastThreeAnswers {
 
     private int state;
 
-    @SuppressWarnings("unused")
+
     public StateOfLastThreeAnswers() {
     }
 
@@ -20,7 +20,7 @@ public class StateOfLastThreeAnswers {
         return state;
     }
 
-    @SuppressWarnings("unused")
+
     public void setState(int state) {
         this.state = state;
     }

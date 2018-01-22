@@ -7,7 +7,6 @@ import android.os.Build;
 import android.view.Window;
 import android.widget.ProgressBar;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.polsl.quizwyzwanie.R;

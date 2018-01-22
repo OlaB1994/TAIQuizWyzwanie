@@ -48,12 +48,12 @@ public class GameFragment extends Fragment {
     private AppUser user;
 
     @OnClick(R.id.fragment_game_surrender_btn)
-    public void onSurrenderClick(){
+    public void onSurrenderClick() {
         //TODO: obsługa działania gry po kliknięciu przycisku surrender. Przemyśleć logikę. Na pewno do ustawienia isSurrender na Player oraz na Game isFinished
     }
 
     @OnClick(R.id.fragment_game_play_btn)
-    public void onPlayClick(){
+    public void onPlayClick() {
         if (game.getCurrentPlayer(user.getEmail()).getMyTurn()) {
             Bundle arguments = new Bundle();
             arguments.putSerializable("user", user);
@@ -61,7 +61,8 @@ public class GameFragment extends Fragment {
             CategoryFragment categoryFragment = new CategoryFragment();
             categoryFragment.setArguments(arguments);
             ((MainActivity) getActivity()).switchToFragment(categoryFragment, CategoryFragment.class.getName());
-        } else Toast.makeText(getContext(), getString(R.string.waiting_for_opponent), Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(getContext(), getString(R.string.waiting_for_opponent), Toast.LENGTH_LONG).show();
 
     }
 
@@ -69,7 +70,7 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         setupGame();
         setupView();
         return view;
@@ -93,8 +94,8 @@ public class GameFragment extends Fragment {
     private void setupGame() {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            user = (AppUser)bundle.getSerializable("user");
-            game = (Game)bundle.getSerializable("game");
+            user = (AppUser) bundle.getSerializable("user");
+            game = (Game) bundle.getSerializable("game");
         }
     }
 
@@ -128,16 +129,16 @@ public class GameFragment extends Fragment {
             }
         }
 
-        for(int i = 0; i < RoundResult.ROUND_PER_GAME; i++){
+        for (int i = 0; i < RoundResult.ROUND_PER_GAME; i++) {
             RoundResult roundResult;
-                if (i < myRound.size() && i < opponentRound.size())
-                    roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), opponentRound.get(i));
-                else if (i == myRound.size()-1 && myRound.size() > 0)
-                    roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), DEFAULT_ANSWER);
-                else if (i == opponentRound.size()-1 && opponentRound.size() > 0)
-                    roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, DEFAULT_ANSWER, opponentRound.get(i));
-                else
-                    roundResult = new RoundResult("NO_SELECTED", DEFAULT_ANSWER, DEFAULT_ANSWER);
+            if (i < myRound.size() && i < opponentRound.size())
+                roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), opponentRound.get(i));
+            else if (i == myRound.size() - 1 && myRound.size() > 0)
+                roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), DEFAULT_ANSWER);
+            else if (i == opponentRound.size() - 1 && opponentRound.size() > 0)
+                roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, DEFAULT_ANSWER, opponentRound.get(i));
+            else
+                roundResult = new RoundResult("NO_SELECTED", DEFAULT_ANSWER, DEFAULT_ANSWER);
 
             results.add(roundResult);
         }

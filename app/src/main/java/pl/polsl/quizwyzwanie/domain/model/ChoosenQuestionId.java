@@ -8,16 +8,16 @@ public class ChoosenQuestionId {
 
     private Long questionId;
 
-    @SuppressWarnings("unused")
+
     public ChoosenQuestionId() {
     }
 
-    @SuppressWarnings("unused")
+
     public ChoosenQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
-    @SuppressWarnings("unused")
+
     public Long getQuestionId() {
         return questionId;
     }

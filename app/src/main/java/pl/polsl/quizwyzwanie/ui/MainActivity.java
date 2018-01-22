@@ -65,18 +65,18 @@ public class MainActivity extends AppCompatActivity implements
         boolean userWasTaken = getUserDataFromAuth();
         if (!userWasTaken) {
             signIn();
-        }else{
+        } else {
             addFragment();
         }
     }
 
     private boolean getUserDataFromAuth() {
         firebaseUser = firebaseAuth.getCurrentUser();
-        if(firebaseUser != null){
+        if (firebaseUser != null) {
             username = firebaseUser.getDisplayName();
             email = firebaseUser.getEmail();
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -180,13 +180,13 @@ public class MainActivity extends AppCompatActivity implements
         finish();
     }
 
-    public void showDialog(){
-        if(!loadingDialog.isShowing() && !isFinishing())
+    public void showDialog() {
+        if (!loadingDialog.isShowing() && !isFinishing())
             loadingDialog.show();
     }
 
-    public void dismissDialog(){
-        if(loadingDialog.isShowing() && !isFinishing())
+    public void dismissDialog() {
+        if (loadingDialog.isShowing() && !isFinishing())
             loadingDialog.dismiss();
     }
 }
