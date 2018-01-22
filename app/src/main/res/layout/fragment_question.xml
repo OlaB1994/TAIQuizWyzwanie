@@ -41,8 +41,8 @@
         android:layout_margin="@dimen/normal_margin"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/colorPrimaryDark"
         android:text="@string/fragment_category_name_placeholder"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/large_text_size" />
 
     <LinearLayout

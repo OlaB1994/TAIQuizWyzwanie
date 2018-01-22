@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class RoundsAdapter extends RecyclerView.Adapter<RoundsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final RoundsAdapter.ViewHolder holder, final int position) {
         setupAnswers(holder, rounds.get(position).getMyQuestionsResults(), rounds.get(position).getOpponentQuestionsResults());
+        holder.categoryTv.setText(rounds.get(position).getCategoryName());
     }
 
     private void setupAnswers(ViewHolder holder, int[] myQuestionsResults, int[] opponentQuestionsResults) {
@@ -95,6 +97,8 @@ public class RoundsAdapter extends RecyclerView.Adapter<RoundsAdapter.ViewHolder
         ImageView opponentSecondQuestionIv;
         @BindView(R.id.entry_rounds_opponent_third_question_iv)
         ImageView opponentThirdQuestionIv;
+        @BindView(R.id.entry_rounds_category_tv)
+        TextView categoryTv;
 
         public ViewHolder(View rowView) {
             super(rowView);

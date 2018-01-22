@@ -32,8 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/normal_margin"
-                android:textColor="@color/colorPrimaryDark"
                 android:text="@string/fragment_menu_user_name_placeholder"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/large_text_size" />
         </LinearLayout>
     </LinearLayout>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_marginTop="@dimen/entry_rounds_margin"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/entry_rounds_margin"
     android:orientation="horizontal">
 
     <ImageView
@@ -18,14 +18,14 @@
         style="@style/EntryGamesQuestion" />
 
     <TextView
+        android:id="@+id/entry_rounds_category_tv"
         android:layout_width="0dp"
         android:layout_height="@dimen/entry_game_question_item_text_height"
         android:layout_weight="2"
+        android:background="@drawable/button_bg"
         android:gravity="center"
         android:lines="1"
-        android:background="@drawable/button_bg"
-        android:textSize="@dimen/medium_text_size"
-        android:text="PLACEHOLDER PLACEHOLDER" />
+        android:textSize="@dimen/small_text_size" />
 
     <ImageView
         android:id="@+id/entry_rounds_opponent_first_question_iv"

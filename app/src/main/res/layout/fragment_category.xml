@@ -5,19 +5,19 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="@dimen/fragment_menu_score_height"
-        android:text="@string/fragment_category_title_text"
-        android:gravity="center"
-        android:textColor="@color/colorPrimary"
         android:layout_gravity="center"
+        android:gravity="center"
         android:padding="@dimen/normal_margin"
-        android:textSize="@dimen/toolbar_text_size"/>
+        android:text="@string/fragment_category_title_text"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/toolbar_text_size" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:layout_gravity="center">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -25,26 +25,26 @@
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="@dimen/fragment_category_button_size"
                 android:id="@+id/fragment_category_first_btn"
+                android:layout_width="@dimen/fragment_category_button_size"
+                android:layout_height="@dimen/fragment_category_button_size"
                 android:layout_margin="@dimen/normal_margin"
-                android:background="@drawable/button_bg"
-                android:layout_height="@dimen/fragment_category_button_size" />
+                android:background="@drawable/button_bg" />
 
             <Button
-                android:layout_width="@dimen/fragment_category_button_size"
                 android:id="@+id/fragment_category_second_btn"
+                android:layout_width="@dimen/fragment_category_button_size"
+                android:layout_height="@dimen/fragment_category_button_size"
                 android:layout_margin="@dimen/normal_margin"
-                android:background="@drawable/button_bg"
-                android:layout_height="@dimen/fragment_category_button_size" />
+                android:background="@drawable/button_bg" />
         </LinearLayout>
 
         <Button
-            android:layout_width="@dimen/fragment_category_button_size"
             android:id="@+id/fragment_category_third_btn"
+            android:layout_width="@dimen/fragment_category_button_size"
+            android:layout_height="@dimen/fragment_category_button_size"
             android:layout_margin="@dimen/normal_margin"
-            android:background="@drawable/button_bg"
-            android:layout_height="@dimen/fragment_category_button_size" />
+            android:background="@drawable/button_bg" />
     </LinearLayout>
 
 </LinearLayout>

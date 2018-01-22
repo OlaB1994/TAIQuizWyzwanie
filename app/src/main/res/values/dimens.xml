@@ -29,4 +29,5 @@
     <dimen name="dialog_loading_padding">10dp</dimen>
     <dimen name="entry_navigation_list_indicator_corner">10dp</dimen>
     <dimen name="dialog_height">100dp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
 </resources>

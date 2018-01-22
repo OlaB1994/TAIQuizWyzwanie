@@ -14,39 +14,39 @@
             android:id="@+id/fragment_game_my_username_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-         android:gravity="center"
             android:layout_weight="1"
-            android:textColor="@color/colorPrimary"
+            android:gravity="center"
             android:text="@string/fragment_menu_user_name_placeholder"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/medium_text_size" />
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textSize="@dimen/toolbar_text_size"
-            android:text="@string/fragment_menu_result_placeholder"
-            android:gravity="center"
-            android:textColor="@color/colorPrimaryDark"
             android:id="@+id/fragment_game_result_tv"
-            android:layout_height="wrap_content" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/fragment_menu_result_placeholder"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/toolbar_text_size" />
 
         <TextView
+            android:id="@+id/fragment_game_opponent_username_tv"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/colorPrimary"
             android:text="@string/fragment_menu_user_name_placeholder"
-            android:textSize="@dimen/medium_text_size"
-            android:id="@+id/fragment_game_opponent_username_tv"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/medium_text_size" />
     </LinearLayout>
 
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_game_round_results_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/fragment_game_round_results_rv"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -56,20 +56,20 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/fragment_game_surrender_btn"
             android:layout_width="@dimen/fragment_menu_button_width"
-            android:text="@string/fragment_menu_surrender_text"
-            android:layout_margin="@dimen/normal_margin"
             android:layout_height="@dimen/fragment_name_small_button_height"
+            android:layout_margin="@dimen/normal_margin"
             android:background="@drawable/button_bg"
-            android:id="@+id/fragment_game_surrender_btn"/>
+            android:text="@string/fragment_menu_surrender_text" />
 
         <Button
+            android:id="@+id/fragment_game_play_btn"
             android:layout_width="@dimen/fragment_menu_button_width"
-            android:text="@string/fragment_menu_play_text"
+            android:layout_height="@dimen/fragment_name_big_button_height"
             android:layout_margin="@dimen/normal_margin"
             android:background="@drawable/button_bg"
-            android:layout_height="@dimen/fragment_name_big_button_height"
-            android:id="@+id/fragment_game_play_btn"/>
+            android:text="@string/fragment_menu_play_text" />
 
     </LinearLayout>
 

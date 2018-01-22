@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
+        android:centerColor="@color/colorAccent3"
         android:endColor="@color/colorPrimary"
-        android:startColor="@color/colorPrimary"
-        android:centerColor="@color/colorAccent3" />
+        android:startColor="@color/colorPrimary" />
     <corners android:radius="@dimen/entry_navigation_list_indicator_corner" />
     <size
         android:width="@dimen/dialog_width"
