@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.domain.model.Game;
+import pl.polsl.quizwyzwanie.domain.model.Player;
 import pl.polsl.quizwyzwanie.domain.model.Question;
 import pl.polsl.quizwyzwanie.domain.model.StateOfLastThreeAnswers;
 
@@ -193,10 +194,17 @@ public class QuestionFragment extends Fragment {
         if (bundle != null) {
             Game game = (Game) bundle.getSerializable("game");
 
-            //TODO: choose correct user instead of user1 always
+            Game.CurrentUser currentUser = game.getCurrentDBUser();
+            Player currentPlayer;
+            if (currentUser.equals(Game.CurrentUser.USER_1)) {
+                currentPlayer = game.getUser1();
+            } else {
+                currentPlayer = game.getUser2();
+            }
+
             List<StateOfLastThreeAnswers> stateOfLastThreeAnswers = new ArrayList<>();
-            if (game.getUser1().getStateOfLastThreeAnswers() != null) {
-                stateOfLastThreeAnswers = game.getUser1().getStateOfLastThreeAnswers();
+            if (currentPlayer.getStateOfLastThreeAnswers() != null) {
+                stateOfLastThreeAnswers = currentPlayer.getStateOfLastThreeAnswers();
             }
 
             final int CORRECT_ANSWER_IN_STATEOFLASTTHREEANSWERS_FIELD = 1;
@@ -206,7 +214,13 @@ public class QuestionFragment extends Fragment {
             } else {
                 stateOfLastThreeAnswers.add(new StateOfLastThreeAnswers(WRONG_ANSWER_IN_STATEOFLASTTHREEANSWERS_FIELD));
             }
-            game.getUser1().setStateOfLastThreeAnswers(stateOfLastThreeAnswers);
+
+            if (currentUser.equals(Game.CurrentUser.USER_1)) {
+                game.getUser1().setStateOfLastThreeAnswers(stateOfLastThreeAnswers);
+            } else {
+                game.getUser2().setStateOfLastThreeAnswers(stateOfLastThreeAnswers);
+            }
+
 
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             rootRef.child("games").child(game.getId()).setValue(game);

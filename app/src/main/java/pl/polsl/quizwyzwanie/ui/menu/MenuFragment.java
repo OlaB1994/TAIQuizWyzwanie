@@ -65,7 +65,7 @@ public class MenuFragment extends Fragment {
 
         Game newGame = new Game(null, null, null, false,
                 new Player(false, currentUser.getEmail(), false, currentUser.getDisplayName(),
-                        null, myTurn,0),
+                        null, myTurn, 0),
                 new Player(false, opponent.getEmail(), false, opponent.getDisplayName(),
                         null, !myTurn, 0),
                 null, "none");
@@ -73,6 +73,7 @@ public class MenuFragment extends Fragment {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("games");
         DatabaseReference newGameRef = ref.push();
         newGame.setId(newGameRef.getKey());
+        newGame.setCurrentUser(Game.CurrentUser.USER_1);
         newGameRef.setValue(newGame);
 
         GameFragment gameFragment = new GameFragment();
@@ -163,8 +164,8 @@ public class MenuFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            if(getActivity()!=null)
-            ((MainActivity) getActivity()).showDialog();
+            if (getActivity() != null)
+                ((MainActivity) getActivity()).showDialog();
             gamesList = new ArrayList<>();
             gamesRv.setLayoutManager(new LinearLayoutManager(getContext(),
                     OrientationHelper.VERTICAL, false));
@@ -184,11 +185,11 @@ public class MenuFragment extends Fragment {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Game game = snapshot.getValue(Game.class);
-                        if(game.getUser1().getEmail().equals(currentUser.getEmail())){
+                        if (game.getUser1().getEmail().equals(currentUser.getEmail())) {
                             game.setCurrentUser(Game.CurrentUser.USER_1);
                             gamesList.add(game);
                         }
-                        if (game.getUser2().getEmail().equals(currentUser.getEmail())){
+                        if (game.getUser2().getEmail().equals(currentUser.getEmail())) {
                             game.setCurrentUser(Game.CurrentUser.USER_2);
                             gamesList.add(game);
                         }
@@ -212,7 +213,7 @@ public class MenuFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Game> gamesList) {
-            ((MainActivity)getActivity()).dismissDialog();
+            ((MainActivity) getActivity()).dismissDialog();
         }
     }
 }
