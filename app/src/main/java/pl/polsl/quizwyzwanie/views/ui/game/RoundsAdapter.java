@@ -26,12 +26,10 @@ public class RoundsAdapter extends RecyclerView.Adapter<RoundsAdapter.ViewHolder
 
     private List<RoundResult> rounds;
     private MainActivity activity;
-    private Game game;
 
-    public RoundsAdapter(MainActivity activity, List<RoundResult> rounds, Game game) {
+    public RoundsAdapter(MainActivity activity, List<RoundResult> rounds) {
         this.activity = activity;
         this.rounds = rounds;
-        this.game = game;
     }
 
     @Override

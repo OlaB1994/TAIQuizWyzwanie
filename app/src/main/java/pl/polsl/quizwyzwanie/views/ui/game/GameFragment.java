@@ -22,6 +22,7 @@ import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.views.domain.model.AppUser;
 import pl.polsl.quizwyzwanie.views.domain.model.Game;
 import pl.polsl.quizwyzwanie.views.domain.model.RoundResult;
+import pl.polsl.quizwyzwanie.views.domain.model.StateOfLastThreeAnswers;
 import pl.polsl.quizwyzwanie.views.ui.MainActivity;
 
 import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_CORRECT;
@@ -88,7 +89,7 @@ public class GameFragment extends Fragment {
 
         resultsRv.setLayoutManager(new LinearLayoutManager(getContext(),
                 OrientationHelper.VERTICAL, false));
-        resultsRv.setAdapter(new RoundsAdapter((MainActivity) getActivity(), mockRounds(), game));
+        resultsRv.setAdapter(new RoundsAdapter((MainActivity) getActivity(), mockRounds()));
     }
 
     private void setupGame() {
@@ -100,16 +101,49 @@ public class GameFragment extends Fragment {
     }
 
     private List<RoundResult> mockRounds() {
+
         List<RoundResult> results = new ArrayList<>();
-        results.add(new RoundResult("CAT1", new int[]{ANSWER_CORRECT, ANSWER_WRONG, ANSWER_CORRECT},
-                new int[]{ANSWER_WRONG, ANSWER_CORRECT, ANSWER_WRONG}));
-        results.add(new RoundResult("CAT1", DEFAULT_ANSWER,
-                new int[]{ANSWER_WRONG, ANSWER_CORRECT, ANSWER_WRONG}));
-        results.add(new RoundResult());
-        results.add(new RoundResult());
-        results.add(new RoundResult());
-        results.add(new RoundResult());
-        results.add(new RoundResult());
+        List<StateOfLastThreeAnswers> myAnswers = game.getCurrentPlayer(user.getEmail()).getStateOfLastThreeAnswers();
+        List<StateOfLastThreeAnswers> opponentAnswers = game.getOpponent(user).getStateOfLastThreeAnswers();
+
+        List<int[]> myRound = new ArrayList<>();
+        List<int[]> opponentRound = new ArrayList<>();
+
+        if (myAnswers != null) {
+            for (int i = 0; i < myAnswers.size() / 3; i++) {
+                int[] round = new int[]{
+                        myAnswers.get(i * 3).getState(),
+                        myAnswers.get((i * 3) + 1).getState(),
+                        myAnswers.get((i * 3) + 2).getState()
+                };
+                myRound.add(round);
+            }
+        }
+
+        if (opponentAnswers != null) {
+            for (int i = 0; i < opponentAnswers.size() / 3; i++) {
+                int[] round = new int[]{
+                        opponentAnswers.get(i * 3).getState(),
+                        opponentAnswers.get((i * 3) + 1).getState(),
+                        opponentAnswers.get((i * 3) + 2).getState()};
+                opponentRound.add(round);
+            }
+        }
+
+        for(int i = 0; i < RoundResult.ROUND_PER_GAME; i++){
+            RoundResult roundResult;
+                if (i < myRound.size() && i < opponentRound.size())
+                    roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), opponentRound.get(i));
+                else if (i == myRound.size()-1 && myRound.size() > 0)
+                    roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), DEFAULT_ANSWER);
+                else if (i == opponentRound.size()-1 && opponentRound.size() > 0)
+                    roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, DEFAULT_ANSWER, opponentRound.get(i));
+                else
+                    roundResult = new RoundResult("NO_SELECTED", DEFAULT_ANSWER, DEFAULT_ANSWER);
+
+            results.add(roundResult);
+        }
+
         return results;
     }
 

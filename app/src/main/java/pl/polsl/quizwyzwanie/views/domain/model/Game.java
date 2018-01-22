@@ -85,6 +85,7 @@ public class Game implements Comparable<Game>, Serializable {
         this.currentUser = currentUser;
     }
 
+    @Exclude
     public CurrentUser getCurrentUser() {
         return currentUser;
     }
@@ -127,6 +128,7 @@ public class Game implements Comparable<Game>, Serializable {
         }
     }
 
+    @Exclude
     public CurrentUser getCurrentDBUser(){
         return currentUser;
     }
