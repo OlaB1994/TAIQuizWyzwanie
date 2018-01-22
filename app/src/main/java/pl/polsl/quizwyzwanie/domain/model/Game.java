@@ -83,6 +83,9 @@ public class Game implements Comparable<Game>, Serializable {
         return whoChoosedCategoryLast;
     }
 
+    public void setWhoChoosedCategoryLast(String whoChoosedCategoryLast) {
+        this.whoChoosedCategoryLast = whoChoosedCategoryLast;
+    }
 
     public String getWhoWinGame() {
         return whoWinGame;

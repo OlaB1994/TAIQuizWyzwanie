@@ -1,17 +1,26 @@
 package pl.polsl.quizwyzwanie.ui.game;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.domain.model.AppUser;
+import pl.polsl.quizwyzwanie.domain.model.Category;
 import pl.polsl.quizwyzwanie.domain.model.Game;
 import pl.polsl.quizwyzwanie.domain.model.RoundResult;
 import pl.polsl.quizwyzwanie.domain.model.StateOfLastThreeAnswers;
@@ -46,6 +56,7 @@ public class GameFragment extends Fragment {
 
     private Game game;
     private AppUser user;
+    private List<Category> categoryList = new ArrayList<>();
 
     @OnClick(R.id.fragment_game_surrender_btn)
     public void onSurrenderClick() {
@@ -60,7 +71,27 @@ public class GameFragment extends Fragment {
             arguments.putSerializable("game", game);
             CategoryFragment categoryFragment = new CategoryFragment();
             categoryFragment.setArguments(arguments);
-            ((MainActivity) getActivity()).switchToFragment(categoryFragment, CategoryFragment.class.getName());
+            if (game.getWhoChoosedCategoryLast() == null) {
+                ((MainActivity) getActivity()).switchToFragment(categoryFragment, CategoryFragment.class.getName());
+            } else if (game.getCurrentPlayer(user.getEmail()).getStateOfLastThreeAnswers().size() ==
+                    game.getOpponent(user).getStateOfLastThreeAnswers().size() &&
+                    !game.getWhoChoosedCategoryLast().equals(user.getEmail())) {
+                ((MainActivity) getActivity()).switchToFragment(categoryFragment, CategoryFragment.class.getName());
+            } else {
+
+                Category category = null;
+                for(Category c : categoryList){
+                    if (c.getName().equals(game.getActualCategoryName())) {
+                        category = c;
+                        break;
+                    }
+                }
+
+                arguments.putSerializable("categoryAndQuestions", category);
+                QuestionFragment questionFragment = new QuestionFragment();
+                questionFragment.setArguments(arguments);
+                ((MainActivity) getActivity()).switchToFragment(questionFragment, QuestionFragment.class.getName());
+            }
         } else
             Toast.makeText(getContext(), getString(R.string.waiting_for_opponent), Toast.LENGTH_LONG).show();
     }
@@ -78,6 +109,8 @@ public class GameFragment extends Fragment {
     private void setupView() {
         myUsernameTv.setText(user.getDisplayName());
         opponentUsernameTv.setText(game.getOpponentUsername(user));
+
+        new GetCategories().execute();
 
         if (game.isFinished()) {
             surrenderBtn.setVisibility(View.GONE);
@@ -125,11 +158,11 @@ public class GameFragment extends Fragment {
     private RoundResult handleRoundResult(List<int[]> myRound, List<int[]> opponentRound, int i) {
         RoundResult roundResult;
         if (i < myRound.size() && i < opponentRound.size())
-            roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), opponentRound.get(i));
+            roundResult = new RoundResult(game.getCategoryRounds().get(i).getCategoryName(), myRound.get(i), opponentRound.get(i));
         else if (i == myRound.size() - 1 && myRound.size() > 0)
-            roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), DEFAULT_ANSWER);
+            roundResult = new RoundResult(game.getCategoryRounds().get(i).getCategoryName(), myRound.get(i), DEFAULT_ANSWER);
         else if (i == opponentRound.size() - 1 && opponentRound.size() > 0)
-            roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, DEFAULT_ANSWER, opponentRound.get(i));
+            roundResult = new RoundResult(game.getCategoryRounds().get(i).getCategoryName(), DEFAULT_ANSWER, opponentRound.get(i));
         else
             roundResult = new RoundResult("NO_SELECTED", DEFAULT_ANSWER, DEFAULT_ANSWER);
         return roundResult;
@@ -146,5 +179,38 @@ public class GameFragment extends Fragment {
         }
     }
 
+    private class GetCategories extends AsyncTask<Void, Void, List<Category>> {
+
+        @Override
+        protected void onPreExecute() {
+            ((MainActivity) getActivity()).showDialog();
+        }
+
+        @Override
+        protected List<Category> doInBackground(Void... voids) {
+            DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference categoryRef = rootRef.child("categories");
+            categoryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Category category = snapshot.getValue(Category.class);
+                        categoryList.add(category);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d("ERROR", "ERROR");
+                }
+            });
+            return categoryList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Category> categoryList) {
+            ((MainActivity) getActivity()).dismissDialog();
+        }
+    }
 
 }

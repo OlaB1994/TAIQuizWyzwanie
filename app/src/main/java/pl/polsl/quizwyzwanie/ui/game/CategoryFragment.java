@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.domain.model.AppUser;
 import pl.polsl.quizwyzwanie.domain.model.Category;
 import pl.polsl.quizwyzwanie.domain.model.CategoryRounds;
 import pl.polsl.quizwyzwanie.domain.model.Game;
@@ -91,7 +92,10 @@ public class CategoryFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             Game game = (Game) bundle.getSerializable("game");
+            AppUser currentUser = (AppUser) bundle.getSerializable("user");
+
             game.setActualCategoryName(category);
+            game.setWhoChoosedCategoryLast(currentUser.getEmail());
 
             List<CategoryRounds> categoryRounds = new ArrayList<>();
             if (game.getCategoryRounds() != null) {

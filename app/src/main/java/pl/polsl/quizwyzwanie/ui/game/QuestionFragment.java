@@ -1,6 +1,7 @@
 package pl.polsl.quizwyzwanie.ui.game;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -13,8 +14,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +27,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.domain.model.Category;
 import pl.polsl.quizwyzwanie.domain.model.CategoryRounds;
 import pl.polsl.quizwyzwanie.domain.model.ChoosenQuestionId;
 import pl.polsl.quizwyzwanie.domain.model.Game;
 import pl.polsl.quizwyzwanie.domain.model.Player;
 import pl.polsl.quizwyzwanie.domain.model.Question;
 import pl.polsl.quizwyzwanie.domain.model.StateOfLastThreeAnswers;
+import pl.polsl.quizwyzwanie.ui.MainActivity;
 
 public class QuestionFragment extends Fragment {
 
@@ -66,6 +72,10 @@ public class QuestionFragment extends Fragment {
     private String currentCategory;
     private Long currentQuestionId;
 
+    private Game game;
+    private Bundle bundle;
+    private Boolean saveChoosenQuestionId;
+
     @OnClick(R.id.fragment_question_answer_a_btn)
     public void onAnswerAClick() {
         handleAnswer(Answer.A);
@@ -92,9 +102,17 @@ public class QuestionFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_question, container, false);
         super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, view);
-        initializeTimer();
+
+//        new GetCategories().execute();
+
         questionCounter = 0;
+
+        bundle = this.getArguments();
+        game = (Game) bundle.getSerializable("game");
+
+        initializeTimer();
         prepareAndShowNextQuestion();
+
         return view;
     }
 
@@ -122,7 +140,32 @@ public class QuestionFragment extends Fragment {
         if (bundle != null) {
             currentCategory = bundle.getString("category");
             question = (Question) bundle.getSerializable("question" + questionCounter);
+            saveChoosenQuestionId = true;
         }
+        if (question == null){
+            saveChoosenQuestionId = false;
+            Category c = (Category) bundle.getSerializable("categoryAndQuestions");
+            List<Question> questions = c.getQuestions();
+
+//            for( Category category : categoryList){
+//                if (category.getName().equals(game.getActualCategoryName())) {
+//                    questions = category.getQuestions();
+//                    break;
+//                }
+//            }
+
+            CategoryRounds lastCategory = game.getCategoryRounds().get(game.getCategoryRounds().size() - 1);
+            ChoosenQuestionId tmpQiD = lastCategory.getChoosenQusetionId()
+                    .get(lastCategory.getChoosenQusetionId().size() - 1 - (2 - questionCounter) );
+            for(Question q : questions){
+                if (q.getId() == tmpQiD.getQuestionId()) {
+                    question = q;
+                    break;
+                }
+            }
+        }
+
+
         timerPb.setMax(MAX_TIME_IN_MILIS);
         if (question != null) {
             questionTv.setText(question.getTresc());
@@ -188,9 +231,9 @@ public class QuestionFragment extends Fragment {
         }
 
         //set stateOfLastThreeAnswers list in Firebase
-        Bundle bundle = this.getArguments();
+        bundle = this.getArguments();
         if (bundle != null) {
-            Game game = (Game) bundle.getSerializable("game");
+            game = (Game) bundle.getSerializable("game");
 
             Game.CurrentUser currentUser = game.getCurrentDBUser();
             Player currentPlayer;
@@ -219,17 +262,26 @@ public class QuestionFragment extends Fragment {
                 game.getUser2().setStateOfLastThreeAnswers(stateOfLastThreeAnswers);
             }
 
+            if (saveChoosenQuestionId) {
+                List<CategoryRounds> categoryRounds = game.getCategoryRounds();
+                CategoryRounds currentRound = categoryRounds.get(categoryRounds.size() - 1);
 
-            List<CategoryRounds> categoryRounds = game.getCategoryRounds();
-            CategoryRounds currentRound = categoryRounds.get(categoryRounds.size() - 1);
+                List<ChoosenQuestionId> choosenQuestionIds = currentRound.getChoosenQusetionId();
+                choosenQuestionIds.add(new ChoosenQuestionId(currentQuestionId));
 
-            List<ChoosenQuestionId> choosenQuestionIds = currentRound.getChoosenQusetionId();
-            choosenQuestionIds.add(new ChoosenQuestionId(currentQuestionId));
-
-            game.getCategoryRounds().get(categoryRounds.size() - 1).setChoosenQusetionId(choosenQuestionIds);
-
+                game.getCategoryRounds().get(categoryRounds.size() - 1).setChoosenQusetionId(choosenQuestionIds);
+            }
 
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+            if (questionCounter == 2 && game.getCurrentPlayer(currentPlayer.getEmail()).getEmail().equals(game.getWhoChoosedCategoryLast())) {
+                if (currentUser.equals(Game.CurrentUser.USER_1)) {
+                    game.getUser1().setMyTurn(false);
+                    game.getUser2().setMyTurn(true);
+                } else {
+                    game.getUser1().setMyTurn(true);
+                    game.getUser2().setMyTurn(false);
+                }
+            }
             rootRef.child("games").child(game.getId()).setValue(game);
         }
     }
@@ -294,5 +346,7 @@ public class QuestionFragment extends Fragment {
     private enum Answer {
         A, B, C, D
     }
+
+
 
 }

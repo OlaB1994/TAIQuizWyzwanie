@@ -3,6 +3,7 @@ package pl.polsl.quizwyzwanie.domain.model;
 import com.google.firebase.database.PropertyName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements Serializable {
@@ -11,7 +12,7 @@ public class Player implements Serializable {
     private String email;
     private boolean isFinished;
     private String displayName;
-    private List<StateOfLastThreeAnswers> stateOfLastThreeAnswers;
+    private List<StateOfLastThreeAnswers> stateOfLastThreeAnswers = new ArrayList<>();
     private boolean myTurn;
     private Integer points;
 
@@ -58,6 +59,9 @@ public class Player implements Serializable {
         return myTurn;
     }
 
+    public void setMyTurn(boolean myTurn) {
+        this.myTurn = myTurn;
+    }
 
     public Integer getPoints() {
         return points;
