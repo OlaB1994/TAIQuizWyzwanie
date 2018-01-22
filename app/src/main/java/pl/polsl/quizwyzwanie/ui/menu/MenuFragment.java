@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.ui.menu;
+package pl.polsl.quizwyzwanie.ui.menu;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,23 +28,25 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
-import pl.polsl.quizwyzwanie.views.domain.model.AppUser;
-import pl.polsl.quizwyzwanie.views.domain.model.Game;
-import pl.polsl.quizwyzwanie.views.domain.model.Player;
-import pl.polsl.quizwyzwanie.views.ui.MainActivity;
-import pl.polsl.quizwyzwanie.views.ui.game.GameFragment;
+import pl.polsl.quizwyzwanie.domain.model.AppUser;
+import pl.polsl.quizwyzwanie.domain.model.Game;
+import pl.polsl.quizwyzwanie.domain.model.Player;
+import pl.polsl.quizwyzwanie.ui.MainActivity;
+import pl.polsl.quizwyzwanie.ui.game.GameFragment;
 
 public class MenuFragment extends Fragment {
 
     @BindView(R.id.fragment_menu_username_tv)
+    private
     TextView usernameTv;
     @BindView(R.id.fragment_menu_games_rv)
+    private
     RecyclerView gamesRv;
 
-    String username = "";
-    String email = "";
+    private String username = "";
+    private String email = "";
     private List<Game> gamesList = new ArrayList<>();
-    private List<AppUser> opponentList = new ArrayList<>();
+    private final List<AppUser> opponentList = new ArrayList<>();
     private GamesAdapter adapter;
     private Bundle bundle;
     private boolean isButtonActive = false;

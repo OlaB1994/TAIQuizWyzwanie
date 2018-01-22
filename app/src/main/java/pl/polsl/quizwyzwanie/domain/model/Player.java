@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.domain.model;
+package pl.polsl.quizwyzwanie.domain.model;
 
 import com.google.firebase.database.PropertyName;
 
@@ -19,6 +19,7 @@ public class Player implements Serializable {
     private boolean myTurn;
     private Integer points;
 
+    @SuppressWarnings("unused")
     public Player() {    }
 
     public Player(boolean isSurrender, String email, boolean isFinished, String displayName, List<StateOfLastThreeAnswers> stateOfLastThreeAnswers, boolean myTurn, Integer points) {
@@ -31,6 +32,7 @@ public class Player implements Serializable {
         this.points = points;
     }
 
+    @SuppressWarnings("unused")
     @PropertyName("isSurrender")
     public Boolean isSurrender() {
         return isSurrender;
@@ -40,6 +42,7 @@ public class Player implements Serializable {
         return email;
     }
 
+    @SuppressWarnings("unused")
     @PropertyName("isFinished")
     public Boolean isFinished() {
         return isFinished;
@@ -61,6 +64,7 @@ public class Player implements Serializable {
         return myTurn;
     }
 
+    @SuppressWarnings("unused")
     public Integer getPoints() {
         return points;
     }

@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.ui.game;
+package pl.polsl.quizwyzwanie.ui.game;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -12,20 +12,19 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.polsl.quizwyzwanie.R;
-import pl.polsl.quizwyzwanie.views.domain.model.Game;
-import pl.polsl.quizwyzwanie.views.domain.model.RoundResult;
-import pl.polsl.quizwyzwanie.views.ui.MainActivity;
+import pl.polsl.quizwyzwanie.domain.model.RoundResult;
+import pl.polsl.quizwyzwanie.ui.MainActivity;
 
-import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_CORRECT;
-import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_DO_NOT_SHOW;
-import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_UNDEFINED;
-import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_WRONG;
-import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.DEFAULT_ANSWER;
+import static pl.polsl.quizwyzwanie.domain.model.RoundResult.ANSWER_CORRECT;
+import static pl.polsl.quizwyzwanie.domain.model.RoundResult.ANSWER_DO_NOT_SHOW;
+import static pl.polsl.quizwyzwanie.domain.model.RoundResult.ANSWER_UNDEFINED;
+import static pl.polsl.quizwyzwanie.domain.model.RoundResult.ANSWER_WRONG;
+import static pl.polsl.quizwyzwanie.domain.model.RoundResult.DEFAULT_ANSWER;
 
 public class RoundsAdapter extends RecyclerView.Adapter<RoundsAdapter.ViewHolder> {
 
-    private List<RoundResult> rounds;
-    private MainActivity activity;
+    private final List<RoundResult> rounds;
+    private final MainActivity activity;
 
     public RoundsAdapter(MainActivity activity, List<RoundResult> rounds) {
         this.activity = activity;

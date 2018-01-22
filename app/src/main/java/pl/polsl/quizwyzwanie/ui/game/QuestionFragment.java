@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.ui.game;
+package pl.polsl.quizwyzwanie.ui.game;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -23,14 +23,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
-import pl.polsl.quizwyzwanie.views.domain.model.Game;
-import pl.polsl.quizwyzwanie.views.domain.model.Question;
-import pl.polsl.quizwyzwanie.views.domain.model.StateOfLastThreeAnswers;
+import pl.polsl.quizwyzwanie.domain.model.Game;
+import pl.polsl.quizwyzwanie.domain.model.Question;
+import pl.polsl.quizwyzwanie.domain.model.StateOfLastThreeAnswers;
 
 public class QuestionFragment extends Fragment {
 
     private static final int QUESTIONS_LIMIT = 3;
-    public static final int MAX_TIME_IN_MILIS = 5000;
+    private static final int MAX_TIME_IN_MILIS = 5000;
+    @SuppressWarnings("unused")
     public static final String TAG = "QF";
     private CountDownTimer countDownTimer;
 
@@ -43,28 +44,38 @@ public class QuestionFragment extends Fragment {
 
     private int questionCounter;
     private boolean isAnswerSelected = false;
-    private boolean[] questionAnswers = new boolean[4];
+    private final boolean[] questionAnswers = new boolean[4];
 
-    int counter = 5;
-    String currentCategory;
+    private int counter = 5;
+    @SuppressWarnings("unused")
+    private String currentCategory;
 
     @BindView(R.id.fragment_question_first_indicator_iv)
+    private
     ImageView firstIndicatorIv;
     @BindView(R.id.fragment_question_second_indicator_iv)
+    private
     ImageView secondIndicatorIv;
     @BindView(R.id.fragment_question_third_indicator_iv)
+    private
     ImageView thirdIndicatorIv;
     @BindView(R.id.fragment_question_question_tv)
+    private
     TextView questionTv;
     @BindView(R.id.fragment_question_answer_a_btn)
+    private
     Button answerABtn;
     @BindView(R.id.fragment_question_answer_b_btn)
+    private
     Button answerBBtn;
     @BindView(R.id.fragment_question_answer_c_btn)
+    private
     Button answerCBtn;
     @BindView(R.id.fragment_question_answer_d_btn)
+    private
     Button answerDBtn;
     @BindView(R.id.fragment_question_timer_pb)
+    private
     ProgressBar timerPb;
 
     @OnClick(R.id.fragment_question_answer_a_btn)

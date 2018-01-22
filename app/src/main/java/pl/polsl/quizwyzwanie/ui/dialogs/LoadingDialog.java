@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.ui.dialogs;
+package pl.polsl.quizwyzwanie.ui.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.domain.model;
+package pl.polsl.quizwyzwanie.domain.model;
 
 import android.support.annotation.NonNull;
 
@@ -42,6 +42,7 @@ public class Game implements Comparable<Game>, Serializable {
         this.whoWinGame = whoWinGame;
     }
 
+    @SuppressWarnings("unused")
     public String getActualCategoryName() {
         return actualCategoryName;
     }
@@ -50,6 +51,7 @@ public class Game implements Comparable<Game>, Serializable {
         this.actualCategoryName = actualCategoryName;
     }
 
+    @SuppressWarnings("unused")
     public List<CategoryRounds> getCategoryRounds() {
         return categoryRounds;
     }
@@ -71,10 +73,12 @@ public class Game implements Comparable<Game>, Serializable {
         return user2;
     }
 
+    @SuppressWarnings("unused")
     public String getWhoChoosedCategoryLast() {
         return whoChoosedCategoryLast;
     }
 
+    @SuppressWarnings("unused")
     public String getWhoWinGame() {
         return whoWinGame;
     }
@@ -87,6 +91,7 @@ public class Game implements Comparable<Game>, Serializable {
         this.currentUser = currentUser;
     }
 
+    @SuppressWarnings("unused")
     @Exclude
     public CurrentUser getCurrentUser() {
         return currentUser;
@@ -130,6 +135,7 @@ public class Game implements Comparable<Game>, Serializable {
         }
     }
 
+    @SuppressWarnings("unused")
     @Exclude
     public CurrentUser getCurrentDBUser(){
         return currentUser;

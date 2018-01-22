@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.ui;
+package pl.polsl.quizwyzwanie.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,9 +26,8 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import butterknife.ButterKnife;
 import pl.polsl.quizwyzwanie.R;
-import pl.polsl.quizwyzwanie.views.domain.model.AppUser;
-import pl.polsl.quizwyzwanie.views.ui.dialogs.LoadingDialog;
-import pl.polsl.quizwyzwanie.views.ui.menu.MenuFragment;
+import pl.polsl.quizwyzwanie.ui.dialogs.LoadingDialog;
+import pl.polsl.quizwyzwanie.ui.menu.MenuFragment;
 
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {

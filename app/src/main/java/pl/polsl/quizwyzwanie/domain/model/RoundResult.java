@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.domain.model;
+package pl.polsl.quizwyzwanie.domain.model;
 
 public class RoundResult {
 
@@ -8,9 +8,9 @@ public class RoundResult {
     public static final int ANSWER_CORRECT = 1;
     public static final int ANSWER_WRONG = -1;
     public static final int ANSWER_DO_NOT_SHOW = 3;
-    public static int[] DEFAULT_ANSWER = new int[]{ANSWER_UNDEFINED, ANSWER_UNDEFINED, ANSWER_UNDEFINED};
+    public static final int[] DEFAULT_ANSWER = new int[]{ANSWER_UNDEFINED, ANSWER_UNDEFINED, ANSWER_UNDEFINED};
 
-    private String categoryName;
+    private final String categoryName;
     private int[] myQuestionsResults = DEFAULT_ANSWER;
     private int[] opponentQuestionsResults = DEFAULT_ANSWER;
 
@@ -20,10 +20,12 @@ public class RoundResult {
         this.opponentQuestionsResults = opponentQuestionsResults;
     }
 
+    @SuppressWarnings("unused")
     public RoundResult() {
         categoryName = "TEST";
     }
 
+    @SuppressWarnings("unused")
     public String getCategoryName() {
         return categoryName;
     }

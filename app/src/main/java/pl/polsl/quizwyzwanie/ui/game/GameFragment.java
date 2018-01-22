@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.ui.game;
+package pl.polsl.quizwyzwanie.ui.game;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,34 +19,37 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
-import pl.polsl.quizwyzwanie.views.domain.model.AppUser;
-import pl.polsl.quizwyzwanie.views.domain.model.Game;
-import pl.polsl.quizwyzwanie.views.domain.model.RoundResult;
-import pl.polsl.quizwyzwanie.views.domain.model.StateOfLastThreeAnswers;
-import pl.polsl.quizwyzwanie.views.ui.MainActivity;
+import pl.polsl.quizwyzwanie.domain.model.AppUser;
+import pl.polsl.quizwyzwanie.domain.model.Game;
+import pl.polsl.quizwyzwanie.domain.model.RoundResult;
+import pl.polsl.quizwyzwanie.domain.model.StateOfLastThreeAnswers;
+import pl.polsl.quizwyzwanie.ui.MainActivity;
 
-import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_CORRECT;
-import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.ANSWER_WRONG;
-import static pl.polsl.quizwyzwanie.views.domain.model.RoundResult.DEFAULT_ANSWER;
+import static pl.polsl.quizwyzwanie.domain.model.RoundResult.DEFAULT_ANSWER;
 
 
 public class GameFragment extends Fragment {
 
     @BindView(R.id.fragment_game_my_username_tv)
+    private
     TextView myUsernameTv;
     @BindView(R.id.fragment_game_opponent_username_tv)
+    private
     TextView opponentUsernameTv;
     @BindView(R.id.fragment_game_result_tv)
     TextView resultTv;
     @BindView(R.id.fragment_game_round_results_rv)
+    private
     RecyclerView resultsRv;
 
     @BindView(R.id.fragment_game_surrender_btn)
+    private
     Button surrenderBtn;
     @BindView(R.id.fragment_game_play_btn)
+    private
     Button playBtn;
 
-    Game game;
+    private Game game;
     private AppUser user;
 
     @OnClick(R.id.fragment_game_surrender_btn)

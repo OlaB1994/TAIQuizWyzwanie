@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.ui.game;
+package pl.polsl.quizwyzwanie.ui.game;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,21 +21,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
-import pl.polsl.quizwyzwanie.views.domain.model.Category;
-import pl.polsl.quizwyzwanie.views.domain.model.Game;
-import pl.polsl.quizwyzwanie.views.domain.model.Question;
-import pl.polsl.quizwyzwanie.views.ui.MainActivity;
+import pl.polsl.quizwyzwanie.domain.model.Category;
+import pl.polsl.quizwyzwanie.domain.model.Game;
+import pl.polsl.quizwyzwanie.domain.model.Question;
+import pl.polsl.quizwyzwanie.ui.MainActivity;
 
 public class CategoryFragment extends Fragment {
 
     @BindView(R.id.fragment_category_first_btn)
+    private
     Button firstBtn;
     @BindView(R.id.fragment_category_second_btn)
+    private
     Button secondBtn;
     @BindView(R.id.fragment_category_third_btn)
+    private
     Button thirdBtn;
 
-    private List<Category> categoriesList = new ArrayList<>();
+    private final List<Category> categoriesList = new ArrayList<>();
     private List<Category> threeRandomCategoriesList = new ArrayList<>();
 
     private List<Question> questions = new ArrayList<>();

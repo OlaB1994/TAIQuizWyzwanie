@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.ui.menu;
+package pl.polsl.quizwyzwanie.ui.menu;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -16,17 +16,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.polsl.quizwyzwanie.R;
-import pl.polsl.quizwyzwanie.views.domain.model.AppUser;
-import pl.polsl.quizwyzwanie.views.domain.model.Game;
-import pl.polsl.quizwyzwanie.views.ui.MainActivity;
-import pl.polsl.quizwyzwanie.views.ui.game.GameFragment;
+import pl.polsl.quizwyzwanie.domain.model.AppUser;
+import pl.polsl.quizwyzwanie.domain.model.Game;
+import pl.polsl.quizwyzwanie.ui.MainActivity;
+import pl.polsl.quizwyzwanie.ui.game.GameFragment;
 
 public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> {
 
-    private List<Game> games;
-    private MainActivity activity;
-    private Bundle bundleData;
-    private AppUser user;
+    private final List<Game> games;
+    private final MainActivity activity;
+    private final Bundle bundleData;
+    private final AppUser user;
 
     public GamesAdapter(MainActivity activity, List<Game> games, Bundle bundleData) {
         this.activity = activity;

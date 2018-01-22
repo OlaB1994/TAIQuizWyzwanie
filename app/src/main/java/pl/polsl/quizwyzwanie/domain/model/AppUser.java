@@ -1,4 +1,4 @@
-package pl.polsl.quizwyzwanie.views.domain.model;
+package pl.polsl.quizwyzwanie.domain.model;
 
 import java.io.Serializable;
 
@@ -25,6 +25,7 @@ public class AppUser implements Serializable{
         this.displayName = username;
     }
 
+    @SuppressWarnings("unused")
     public String getId() {
         return id;
     }
@@ -37,6 +38,7 @@ public class AppUser implements Serializable{
         return displayName;
     }
 
+    @SuppressWarnings("unused")
     public Long getWins() {
         return wins;
     }
@@ -45,14 +47,17 @@ public class AppUser implements Serializable{
         this.id = id;
     }
 
+    @SuppressWarnings("unused")
     public void setEmail(String email) {
         this.email = email;
     }
 
+    @SuppressWarnings("unused")
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
+    @SuppressWarnings("unused")
     public void setWins(Long wins) {
         this.wins = wins;
     }
