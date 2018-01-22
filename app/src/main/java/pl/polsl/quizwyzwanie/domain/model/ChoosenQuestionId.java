@@ -8,15 +8,12 @@ public class ChoosenQuestionId {
 
     private Long questionId;
 
-
     public ChoosenQuestionId() {
     }
-
 
     public ChoosenQuestionId(Long questionId) {
         this.questionId = questionId;
     }
-
 
     public Long getQuestionId() {
         return questionId;

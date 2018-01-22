@@ -25,7 +25,6 @@ public class AppUser implements Serializable {
         this.displayName = username;
     }
 
-
     public String getId() {
         return id;
     }
@@ -38,7 +37,6 @@ public class AppUser implements Serializable {
         return email;
     }
 
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -47,16 +45,13 @@ public class AppUser implements Serializable {
         return displayName;
     }
 
-
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
-
     public Long getWins() {
         return wins;
     }
-
 
     public void setWins(Long wins) {
         this.wins = wins;

@@ -12,18 +12,15 @@ public class Question implements Serializable {
     public Question() {
     }
 
-
     public Question(long id, String tresc, List<Answer> answers) {
         this.id = id;
         this.tresc = tresc;
         this.answers = answers;
     }
 
-
     public long getId() {
         return id;
     }
-
 
     public void setId(long id) {
         this.id = id;
@@ -33,7 +30,6 @@ public class Question implements Serializable {
         return tresc;
     }
 
-
     public void setTresc(String tresc) {
         this.tresc = tresc;
     }
@@ -41,7 +37,6 @@ public class Question implements Serializable {
     public List<Answer> getAnswers() {
         return answers;
     }
-
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;

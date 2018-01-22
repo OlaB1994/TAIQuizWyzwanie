@@ -24,6 +24,7 @@ public class Game implements Comparable<Game>, Serializable {
     private Player user2;
     private String whoChoosedCategoryLast;
     private String whoWinGame;
+
     public Game() {
     }
 

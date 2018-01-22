@@ -28,7 +28,6 @@ public class Answer implements Serializable {
         return tresc;
     }
 
-
     public void setTresc(String tresc) {
         this.tresc = tresc;
     }

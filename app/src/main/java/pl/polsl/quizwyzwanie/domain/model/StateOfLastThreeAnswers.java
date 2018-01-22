@@ -8,7 +8,6 @@ public class StateOfLastThreeAnswers {
 
     private int state;
 
-
     public StateOfLastThreeAnswers() {
     }
 

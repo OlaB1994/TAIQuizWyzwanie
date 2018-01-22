@@ -32,7 +32,6 @@ public class Player implements Serializable {
         this.points = points;
     }
 
-
     @PropertyName("isSurrender")
     public Boolean isSurrender() {
         return isSurrender;
@@ -41,7 +40,6 @@ public class Player implements Serializable {
     public String getEmail() {
         return email;
     }
-
 
     @PropertyName("isFinished")
     public Boolean isFinished() {

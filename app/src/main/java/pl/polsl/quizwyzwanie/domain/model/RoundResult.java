@@ -2,7 +2,6 @@ package pl.polsl.quizwyzwanie.domain.model;
 
 public class RoundResult {
 
-
     public static final int ROUND_PER_GAME = 6;
     public static final int ANSWER_UNDEFINED = 0;
     public static final int ANSWER_CORRECT = 1;
@@ -20,11 +19,9 @@ public class RoundResult {
         this.opponentQuestionsResults = opponentQuestionsResults;
     }
 
-
     public RoundResult() {
         categoryName = "TEST";
     }
-
 
     public String getCategoryName() {
         return categoryName;

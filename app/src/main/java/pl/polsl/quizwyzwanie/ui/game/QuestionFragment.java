@@ -32,13 +32,13 @@ import pl.polsl.quizwyzwanie.domain.model.StateOfLastThreeAnswers;
 
 public class QuestionFragment extends Fragment {
 
-
     public static final String TAG = "QF";
     private static final int QUESTIONS_LIMIT = 3;
     private static final int MAX_TIME_IN_MILIS = 5000;
     private static final int ANSWER_WRONG = 0;
     private static final int ANSWER_CORRECT = 1;
     private final boolean[] questionAnswers = new boolean[4];
+
     @BindView(R.id.fragment_question_first_indicator_iv)
     ImageView firstIndicatorIv;
     @BindView(R.id.fragment_question_second_indicator_iv)
@@ -57,6 +57,7 @@ public class QuestionFragment extends Fragment {
     Button answerDBtn;
     @BindView(R.id.fragment_question_timer_pb)
     ProgressBar timerPb;
+
     private CountDownTimer countDownTimer;
     private int questionCounter;
     private boolean isAnswerSelected = false;

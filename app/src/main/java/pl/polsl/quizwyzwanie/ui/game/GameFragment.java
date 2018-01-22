@@ -1,6 +1,7 @@
 package pl.polsl.quizwyzwanie.ui.game;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -63,7 +64,6 @@ public class GameFragment extends Fragment {
             ((MainActivity) getActivity()).switchToFragment(categoryFragment, CategoryFragment.class.getName());
         } else
             Toast.makeText(getContext(), getString(R.string.waiting_for_opponent), Toast.LENGTH_LONG).show();
-
     }
 
     @Override
@@ -75,7 +75,6 @@ public class GameFragment extends Fragment {
         setupView();
         return view;
     }
-
 
     private void setupView() {
         myUsernameTv.setText(user.getDisplayName());
@@ -109,40 +108,43 @@ public class GameFragment extends Fragment {
         List<int[]> opponentRound = new ArrayList<>();
 
         if (myAnswers != null) {
-            for (int i = 0; i < myAnswers.size() / 3; i++) {
-                int[] round = new int[]{
-                        myAnswers.get(i * 3).getState(),
-                        myAnswers.get((i * 3) + 1).getState(),
-                        myAnswers.get((i * 3) + 2).getState()
-                };
-                myRound.add(round);
-            }
+            handleAnswers(myAnswers, myRound);
         }
-
         if (opponentAnswers != null) {
-            for (int i = 0; i < opponentAnswers.size() / 3; i++) {
-                int[] round = new int[]{
-                        opponentAnswers.get(i * 3).getState(),
-                        opponentAnswers.get((i * 3) + 1).getState(),
-                        opponentAnswers.get((i * 3) + 2).getState()};
-                opponentRound.add(round);
-            }
+            handleAnswers(opponentAnswers, opponentRound);
         }
 
         for (int i = 0; i < RoundResult.ROUND_PER_GAME; i++) {
             RoundResult roundResult;
-            if (i < myRound.size() && i < opponentRound.size())
-                roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), opponentRound.get(i));
-            else if (i == myRound.size() - 1 && myRound.size() > 0)
-                roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), DEFAULT_ANSWER);
-            else if (i == opponentRound.size() - 1 && opponentRound.size() > 0)
-                roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, DEFAULT_ANSWER, opponentRound.get(i));
-            else
-                roundResult = new RoundResult("NO_SELECTED", DEFAULT_ANSWER, DEFAULT_ANSWER);
-
+            roundResult = handleRoundResult(myRound, opponentRound, i);
             results.add(roundResult);
         }
         return results;
+    }
+
+    @NonNull
+    private RoundResult handleRoundResult(List<int[]> myRound, List<int[]> opponentRound, int i) {
+        RoundResult roundResult;
+        if (i < myRound.size() && i < opponentRound.size())
+            roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), opponentRound.get(i));
+        else if (i == myRound.size() - 1 && myRound.size() > 0)
+            roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, myRound.get(i), DEFAULT_ANSWER);
+        else if (i == opponentRound.size() - 1 && opponentRound.size() > 0)
+            roundResult = new RoundResult("TMP"/*game.getCategoryRounds().get(i).getCategoryName()*/, DEFAULT_ANSWER, opponentRound.get(i));
+        else
+            roundResult = new RoundResult("NO_SELECTED", DEFAULT_ANSWER, DEFAULT_ANSWER);
+        return roundResult;
+    }
+
+    private void handleAnswers(List<StateOfLastThreeAnswers> myAnswers, List<int[]> myRound) {
+        for (int i = 0; i < myAnswers.size() / 3; i++) {
+            int[] round = new int[]{
+                    myAnswers.get(i * 3).getState(),
+                    myAnswers.get((i * 3) + 1).getState(),
+                    myAnswers.get((i * 3) + 2).getState()
+            };
+            myRound.add(round);
+        }
     }
 
 
