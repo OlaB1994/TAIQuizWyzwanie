@@ -29,13 +29,10 @@ import pl.polsl.quizwyzwanie.ui.MainActivity;
 public class CategoryFragment extends Fragment {
 
     @BindView(R.id.fragment_category_first_btn)
-    private
     Button firstBtn;
     @BindView(R.id.fragment_category_second_btn)
-    private
     Button secondBtn;
     @BindView(R.id.fragment_category_third_btn)
-    private
     Button thirdBtn;
 
     private final List<Category> categoriesList = new ArrayList<>();

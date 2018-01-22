@@ -31,22 +31,17 @@ import static pl.polsl.quizwyzwanie.domain.model.RoundResult.DEFAULT_ANSWER;
 public class GameFragment extends Fragment {
 
     @BindView(R.id.fragment_game_my_username_tv)
-    private
     TextView myUsernameTv;
     @BindView(R.id.fragment_game_opponent_username_tv)
-    private
     TextView opponentUsernameTv;
     @BindView(R.id.fragment_game_result_tv)
     TextView resultTv;
     @BindView(R.id.fragment_game_round_results_rv)
-    private
     RecyclerView resultsRv;
 
     @BindView(R.id.fragment_game_surrender_btn)
-    private
     Button surrenderBtn;
     @BindView(R.id.fragment_game_play_btn)
-    private
     Button playBtn;
 
     private Game game;
@@ -146,7 +141,6 @@ public class GameFragment extends Fragment {
 
             results.add(roundResult);
         }
-
         return results;
     }
 
