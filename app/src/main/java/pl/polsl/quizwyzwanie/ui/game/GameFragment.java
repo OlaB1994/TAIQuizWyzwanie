@@ -57,6 +57,7 @@ public class GameFragment extends Fragment {
     private Game game;
     private AppUser user;
     private List<Category> categoryList = new ArrayList<>();
+    private int currentPlayerPoints = 0, opponentPoints = 0;
 
     @OnClick(R.id.fragment_game_surrender_btn)
     public void onSurrenderClick() {
@@ -109,6 +110,8 @@ public class GameFragment extends Fragment {
     private void setupView() {
         myUsernameTv.setText(user.getDisplayName());
         opponentUsernameTv.setText(game.getOpponentUsername(user));
+        String result = currentPlayerPoints + " - " + opponentPoints;
+        resultTv.setText(result);
 
         new GetCategories().execute();
 
@@ -127,6 +130,22 @@ public class GameFragment extends Fragment {
         if (bundle != null) {
             user = (AppUser) bundle.getSerializable("user");
             game = (Game) bundle.getSerializable("game");
+        }
+
+
+        for( StateOfLastThreeAnswers state : game.getCurrentPlayer(user.getEmail()).getStateOfLastThreeAnswers()){
+            if (state.getState() > 0) currentPlayerPoints++;
+        }
+
+        if (game.getCurrentPlayer(user.getEmail()).getStateOfLastThreeAnswers().size() <
+                game.getOpponent(user).getStateOfLastThreeAnswers().size()) {
+            for (int state = 0; state < game.getCurrentPlayer(user.getEmail()).getStateOfLastThreeAnswers().size(); state++) {
+                if (game.getCurrentPlayer(user.getEmail()).getStateOfLastThreeAnswers().get(state).getState() > 0) opponentPoints++;
+            }
+        } else {
+            for( StateOfLastThreeAnswers state : game.getOpponent(user).getStateOfLastThreeAnswers()){
+                if (state.getState() > 0) opponentPoints++;
+            }
         }
     }
 

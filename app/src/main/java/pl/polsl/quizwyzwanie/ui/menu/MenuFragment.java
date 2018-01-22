@@ -67,9 +67,9 @@ public class MenuFragment extends Fragment {
 
         Game newGame = new Game(null, null, null, false,
                 new Player(false, currentUser.getEmail(), false, currentUser.getDisplayName(),
-                        null, myTurn, 0),
+                        new ArrayList<>(), myTurn, 0),
                 new Player(false, opponent.getEmail(), false, opponent.getDisplayName(),
-                        null, !myTurn, 0),
+                        new ArrayList<>(), !myTurn, 0),
                 null, "none");
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("games");
