@@ -23,6 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
+import pl.polsl.quizwyzwanie.domain.model.CategoryRounds;
+import pl.polsl.quizwyzwanie.domain.model.ChoosenQuestionId;
 import pl.polsl.quizwyzwanie.domain.model.Game;
 import pl.polsl.quizwyzwanie.domain.model.Player;
 import pl.polsl.quizwyzwanie.domain.model.Question;
@@ -50,6 +52,7 @@ public class QuestionFragment extends Fragment {
     private int counter = 5;
     @SuppressWarnings("unused")
     private String currentCategory;
+    private Long currentQuestionId;
 
     @BindView(R.id.fragment_question_first_indicator_iv)
     ImageView firstIndicatorIv;
@@ -139,6 +142,8 @@ public class QuestionFragment extends Fragment {
             questionAnswers[1] = question.getAnswers().get(1).isIsCorrect();
             questionAnswers[2] = question.getAnswers().get(2).isIsCorrect();
             questionAnswers[3] = question.getAnswers().get(3).isIsCorrect();
+
+            currentQuestionId = question.getId();
         }
         setupTimer();
     }
@@ -220,6 +225,15 @@ public class QuestionFragment extends Fragment {
             } else {
                 game.getUser2().setStateOfLastThreeAnswers(stateOfLastThreeAnswers);
             }
+
+
+            List<CategoryRounds> categoryRounds = game.getCategoryRounds();
+            CategoryRounds currentRound = categoryRounds.get(categoryRounds.size() - 1);
+
+            List<ChoosenQuestionId> choosenQuestionIds = currentRound.getChoosenQusetionId();
+            choosenQuestionIds.add(new ChoosenQuestionId(currentQuestionId));
+
+            game.getCategoryRounds().get(categoryRounds.size() - 1).setChoosenQusetionId(choosenQuestionIds);
 
 
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();

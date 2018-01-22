@@ -56,6 +56,10 @@ public class Game implements Comparable<Game>, Serializable {
         return categoryRounds;
     }
 
+    public void setCategoryRounds(List<CategoryRounds> categoryRounds) {
+        this.categoryRounds = categoryRounds;
+    }
+
     public String getId() {
         return id;
     }

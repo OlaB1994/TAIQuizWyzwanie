@@ -4,7 +4,7 @@ package pl.polsl.quizwyzwanie.domain.model;
  * Created by Mateusz on 19.01.2018.
  */
 
-class ChoosenQuestionId {
+public class ChoosenQuestionId {
 
     private Long questionId;
 
@@ -20,5 +20,9 @@ class ChoosenQuestionId {
     @SuppressWarnings("unused")
     public Long getQuestionId() {
         return questionId;
+    }
+
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Mateusz on 19.01.2018.
  */
 
-class CategoryRounds {
+public class CategoryRounds {
 
     private String categoryName;
     private List<ChoosenQuestionId> choosenQusetionId; //TODO poprawić nazwę gdy będzie poprawna w bazie literówka w Question
@@ -29,5 +29,9 @@ class CategoryRounds {
     @SuppressWarnings("unused")
     public List<ChoosenQuestionId> getChoosenQusetionId() {
         return choosenQusetionId;
+    }
+
+    public void setChoosenQusetionId(List<ChoosenQuestionId> choosenQusetionId) {
+        this.choosenQusetionId = choosenQusetionId;
     }
 }

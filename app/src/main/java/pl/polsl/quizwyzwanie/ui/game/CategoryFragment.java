@@ -22,6 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.polsl.quizwyzwanie.R;
 import pl.polsl.quizwyzwanie.domain.model.Category;
+import pl.polsl.quizwyzwanie.domain.model.CategoryRounds;
+import pl.polsl.quizwyzwanie.domain.model.ChoosenQuestionId;
 import pl.polsl.quizwyzwanie.domain.model.Game;
 import pl.polsl.quizwyzwanie.domain.model.Question;
 import pl.polsl.quizwyzwanie.ui.MainActivity;
@@ -91,6 +93,14 @@ public class CategoryFragment extends Fragment {
         if (bundle != null) {
             Game game = (Game) bundle.getSerializable("game");
             game.setActualCategoryName(category);
+
+            List<CategoryRounds> categoryRounds = new ArrayList<>();
+            if (game.getCategoryRounds() != null) {
+                categoryRounds = game.getCategoryRounds();
+            }
+
+            categoryRounds.add(new CategoryRounds(category, new ArrayList<>()));
+            game.setCategoryRounds(categoryRounds);
 
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             rootRef.child("games").child(game.getId()).setValue(game);
