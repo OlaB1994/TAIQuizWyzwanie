@@ -37,10 +37,13 @@ import pl.polsl.quizwyzwanie.ui.game.GameFragment;
 public class MenuFragment extends Fragment {
 
     private final List<AppUser> opponentList = new ArrayList<>();
+
+
     @BindView(R.id.fragment_menu_username_tv)
     TextView usernameTv;
     @BindView(R.id.fragment_menu_games_rv)
     RecyclerView gamesRv;
+
     private String username = "";
     private String email = "";
     private List<Game> gamesList = new ArrayList<>();
